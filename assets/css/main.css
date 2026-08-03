@@ -1,0 +1,1048 @@
+/* ═══════════════════════════════════════════════════════════════════════
+   Scholz Growth Engine
+   ───────────────────────────────────────────────────────────────────────
+   Gestaltungsprinzip: Breite ist Hierarchie.
+   Die Maschine im Hero besteht aus gestapelten Platten unterschiedlicher
+   Grundfläche — die Typografie macht dasselbe. Archivo läuft auf 125 %
+   Breite für Überschriften, Instrument Sans bleibt schmal für Fließtext,
+   Martian Mono liegt breit unter den Daten. Drei Breiten, drei Rollen.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* Grund — Fast-Schwarz mit Violettstich, nie reines #000 */
+  --leere:        #08070E;
+  --leere-alt:    #0C0A18;
+  --platte:       #14102A;
+  --platte-hoch:  #1B1538;
+
+  /* Kanten */
+  --kante:        #241C48;
+  --kante-hell:   #3A2E77;
+
+  /* Akzente — Violett führt, Bernstein markiert ausschließlich das Ergebnis */
+  --violett:      #6C4BFF;
+  --violett-weich:#A08CFF;
+  --violett-tief: #2A1F60;
+  --bernstein:    #FFA23A;
+
+  /* Schrift */
+  --papier:       #F4F2FA;
+  --gedaempft:    #A9A2C2;
+  /* Auf allen drei Grundtönen über 4,5:1 — geprüft, nicht geschätzt. */
+  --leise:        #8A82A8;
+
+  --schrift-display: 'Archivo', ui-sans-serif, system-ui, sans-serif;
+  --schrift-text:    'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
+  --schrift-mono:    'Martian Mono', ui-monospace, 'SFMono-Regular', monospace;
+
+  --bahn: 76rem;      /* Satzbreite */
+  --luft: clamp(4.5rem, 9vw, 8.5rem);   /* vertikaler Abschnittsabstand */
+  --rand: clamp(1.25rem, 4vw, 2.5rem);  /* seitlicher Rand */
+  --rundung: 4px;     /* fast eckig — die Maschine hat harte Kanten */
+}
+
+/* ── Grundlagen ─────────────────────────────────────────────────────── */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 6rem;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--leere);
+  color: var(--papier);
+  font-family: var(--schrift-text);
+  font-size: 1.0625rem;
+  line-height: 1.65;
+  font-synthesis: none;
+  -webkit-font-smoothing: antialiased;
+}
+
+img, svg { max-width: 100%; height: auto; display: block; }
+
+a { color: inherit; }
+
+:focus-visible {
+  outline: 2px solid var(--violett-weich);
+  outline-offset: 3px;
+  border-radius: 2px;
+}
+
+::selection { background: var(--violett); color: #fff; }
+
+.skip {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 100;
+  padding: 0.75rem 1.25rem;
+  background: var(--violett);
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+}
+.skip:focus { left: 0; }
+
+.wrap {
+  width: 100%;
+  max-width: var(--bahn);
+  margin-inline: auto;
+  padding-inline: var(--rand);
+}
+
+/* ── Wiederkehrende Textrollen ──────────────────────────────────────── */
+
+.augenbraue {
+  margin: 0 0 1.5rem;
+  font-family: var(--schrift-mono);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  font-stretch: 87.5%;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--violett-weich);
+}
+.augenbraue--gedaempft { color: var(--leise); }
+
+.titel {
+  margin: 0 0 1.25rem;
+  font-family: var(--schrift-display);
+  font-size: clamp(1.75rem, 4.4vw, 3.35rem);
+  font-weight: 800;
+  font-stretch: 125%;
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+  /* Deutsche Komposita sprengen sonst schmale Viewports —
+     „Arbeitsprobe“, „spezialisiert“, „Antwortschicht“. */
+  hyphens: auto;
+  overflow-wrap: break-word;
+}
+
+.blei {
+  margin: 0 0 3.5rem;
+  font-size: clamp(1.0625rem, 1.35vw, 1.1875rem);
+  line-height: 1.6;
+  color: var(--gedaempft);
+  hyphens: auto;
+}
+.blei--breit { max-width: 58ch; }
+
+.hinweis {
+  margin: 3.5rem 0 0;
+  padding: 1.25rem 1.5rem;
+  border-left: 2px solid var(--violett);
+  background: var(--platte);
+  font-size: 0.9375rem;
+  color: var(--gedaempft);
+  max-width: 68ch;
+}
+.hinweis strong { color: var(--papier); font-weight: 600; }
+.hinweis em { color: var(--violett-weich); font-style: normal; }
+
+/* ── Knöpfe ─────────────────────────────────────────────────────────── */
+
+.knopf {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.9rem 1.6rem;
+  background: var(--violett);
+  color: #fff;
+  border: 1px solid var(--violett);
+  border-radius: var(--rundung);
+  font-family: var(--schrift-text);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: background .18s ease, border-color .18s ease, transform .18s ease;
+}
+.knopf:hover { background: #7d5fff; border-color: #7d5fff; transform: translateY(-1px); }
+.knopf:active { transform: translateY(0); }
+
+.knopf--leer {
+  background: transparent;
+  color: var(--papier);
+  border-color: var(--kante-hell);
+}
+.knopf--leer:hover { background: var(--platte); border-color: var(--violett); }
+
+.knopf--klein { padding: 0.6rem 1.1rem; font-size: 0.875rem; }
+.knopf--voll  { width: 100%; margin-top: 1.75rem; }
+
+/* ── Kopfzeile ──────────────────────────────────────────────────────── */
+
+.kopf {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: color-mix(in srgb, var(--leere) 88%, transparent);
+  backdrop-filter: blur(14px);
+  border-bottom: 1px solid var(--kante);
+}
+
+.kopf__zeile {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  min-height: 4.5rem;
+}
+
+.marke {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  text-decoration: none;
+  font-family: var(--schrift-display);
+  font-weight: 700;
+  font-stretch: 112%;
+  font-size: 0.9375rem;
+  letter-spacing: -0.01em;
+  margin-right: auto;
+}
+
+/* Drei gestapelte Platten — dasselbe Zeichen wie die Maschine */
+.marke__glyphe {
+  display: grid;
+  gap: 2px;
+  width: 20px;
+  flex: none;
+}
+.marke__glyphe span {
+  display: block;
+  height: 3px;
+  background: var(--kante-hell);
+  transform: skewX(-32deg);
+}
+.marke__glyphe span:nth-child(1) { width: 60%; background: var(--violett); margin-left: 40%; }
+.marke__glyphe span:nth-child(2) { width: 80%; margin-left: 20%; }
+.marke__glyphe span:nth-child(3) { width: 100%; }
+
+.nav {
+  display: flex;
+  gap: 1.75rem;
+  font-size: 0.875rem;
+}
+.nav a {
+  color: var(--gedaempft);
+  text-decoration: none;
+  transition: color .16s ease;
+}
+.nav a:hover { color: var(--papier); }
+
+/* ── Hero ───────────────────────────────────────────────────────────── */
+
+.hero {
+  position: relative;
+  padding-block: clamp(3.5rem, 7vw, 6rem) clamp(4rem, 8vw, 7rem);
+  overflow: hidden;
+}
+
+/* Violetter Lichtschein hinter der Maschine */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 12%;
+  right: -10%;
+  width: min(70vw, 780px);
+  aspect-ratio: 1;
+  background: radial-gradient(circle, rgba(108,75,255,.20), transparent 68%);
+  pointer-events: none;
+}
+
+.hero__raster {
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.02fr);
+  gap: clamp(2.5rem, 5vw, 4.5rem);
+  align-items: center;
+}
+
+.hero__titel {
+  margin: 0 0 1.75rem;
+  font-family: var(--schrift-display);
+  font-size: clamp(2.1rem, 5.6vw, 4.5rem);
+  font-weight: 800;
+  font-stretch: 125%;
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  hyphens: auto;
+  overflow-wrap: break-word;
+}
+.hero__titel em {
+  font-style: normal;
+  color: var(--violett-weich);
+}
+.hero__titel-zwei {
+  display: block;
+  margin-top: 0.5rem;
+  font-size: 0.5em;
+  font-stretch: 100%;
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: var(--gedaempft);
+}
+
+.hero__blei {
+  margin: 0 0 2.25rem;
+  max-width: 48ch;
+  font-size: clamp(1.0625rem, 1.3vw, 1.1875rem);
+  color: var(--gedaempft);
+  hyphens: auto;
+}
+
+.hero__aktionen {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.875rem;
+}
+
+.hero__fussnote {
+  margin: 1.5rem 0 0;
+  font-family: var(--schrift-mono);
+  font-size: 0.6875rem;
+  font-stretch: 87.5%;
+  letter-spacing: 0.06em;
+  color: var(--leise);
+}
+
+/* ── Die Maschine ───────────────────────────────────────────────────── */
+
+.maschine {
+  position: relative;
+  width: 100%;
+}
+
+.maschine__bild {
+  width: 100%;
+  height: auto;
+}
+
+.chip {
+  position: absolute;
+  margin: 0;
+  padding: 0.7rem 0.9rem;
+  width: min(46%, 15rem);
+  background: color-mix(in srgb, var(--platte-hoch) 92%, transparent);
+  backdrop-filter: blur(8px);
+  border: 1px solid var(--kante-hell);
+  border-radius: var(--rundung);
+  box-shadow: 0 12px 32px rgba(0,0,0,.55);
+}
+
+.chip__kopf {
+  font-family: var(--schrift-mono);
+  font-size: 0.5625rem;
+  font-stretch: 87.5%;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--leise);
+  margin-bottom: 0.3rem;
+}
+
+.chip__leib {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: var(--papier);
+}
+
+.chip--frage {
+  top: 2%;
+  left: 0;
+  border-color: var(--violett);
+}
+.chip--frage .chip__leib { font-family: var(--schrift-mono); font-size: 0.75rem; font-stretch: 87.5%; }
+
+.chip--antwort {
+  bottom: 12%;
+  right: 0;
+  border-color: color-mix(in srgb, var(--bernstein) 55%, transparent);
+}
+.chip--antwort mark {
+  background: none;
+  color: var(--bernstein);
+  font-weight: 600;
+}
+.chip__quelle {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0.5rem 0 0;
+  padding-top: 0.5rem;
+  border-top: 1px solid var(--kante);
+  font-family: var(--schrift-mono);
+  font-size: 0.5625rem;
+  font-stretch: 87.5%;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--bernstein);
+}
+.chip__quelle::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--bernstein);
+}
+
+/* Beide Karten stehen dauerhaft — die Aussage des Heros muss auch im
+   Standbild lesbar sein. Bewegt wird nur der Punkt, der die Nennung
+   markiert, im Takt der Laufpunkte im SVG (3,6 s). */
+@media (prefers-reduced-motion: no-preference) {
+  .chip__quelle::before { animation: quelle-puls 3.6s ease-in-out infinite; }
+  @keyframes quelle-puls {
+    0%, 48%   { opacity: .25; transform: scale(1); }
+    62%, 78%  { opacity: 1;   transform: scale(1.35); }
+    92%, 100% { opacity: .25; transform: scale(1); }
+  }
+}
+
+/* ── Abschnitte ─────────────────────────────────────────────────────── */
+
+.abschnitt {
+  padding-block: var(--luft);
+  border-top: 1px solid var(--kante);
+}
+.abschnitt--alt { background: var(--leere-alt); }
+
+/* ── Gegenüberstellung: Trefferliste gegen Antwort ──────────────────── */
+
+.gegenueber {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 21rem), 1fr));
+  gap: 1.5rem;
+}
+
+.gegenueber__seite {
+  padding: 1.75rem;
+  border: 1px solid var(--kante);
+  border-radius: var(--rundung);
+  background: var(--platte);
+}
+.gegenueber__seite--neu {
+  border-color: var(--kante-hell);
+  background: linear-gradient(160deg, var(--violett-tief), var(--platte) 62%);
+}
+
+.gegenueber__titel {
+  margin: 0 0 1.5rem;
+  font-family: var(--schrift-display);
+  font-size: 1.375rem;
+  font-weight: 700;
+  font-stretch: 112%;
+  letter-spacing: -0.015em;
+}
+
+.gegenueber__text {
+  margin: 1.5rem 0 0;
+  font-size: 0.9375rem;
+  color: var(--gedaempft);
+}
+
+.serp { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.6rem; }
+.serp__zeile { display: flex; align-items: center; gap: 0.75rem; }
+.serp__balken {
+  height: 8px;
+  flex: 1;
+  background: var(--kante);
+  border-radius: 2px;
+}
+.serp__zeile:nth-child(2) .serp__balken { max-width: 78%; }
+.serp__zeile:nth-child(4) .serp__balken { max-width: 66%; }
+.serp__zeile:nth-child(5) .serp__balken { max-width: 84%; }
+.serp__zeile:nth-child(6) .serp__balken { max-width: 58%; }
+.serp__zeile--du .serp__balken { background: var(--kante-hell); max-width: 72%; }
+.serp__ihr {
+  font-family: var(--schrift-mono);
+  font-size: 0.625rem;
+  font-stretch: 87.5%;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--leise);
+  white-space: nowrap;
+}
+
+.antwortblock { display: grid; gap: 0.6rem; }
+.antwortblock__zeile {
+  height: 8px;
+  margin: 0;
+  background: var(--kante-hell);
+  border-radius: 2px;
+  opacity: .75;
+}
+.antwortblock__zeile--kurz { width: 62%; }
+.antwortblock__namen {
+  list-style: none;
+  margin: 0.9rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+.antwortblock__namen li {
+  padding: 0.3rem 0.65rem;
+  border: 1px solid color-mix(in srgb, var(--bernstein) 45%, transparent);
+  border-radius: 2px;
+  font-family: var(--schrift-mono);
+  font-size: 0.625rem;
+  font-stretch: 87.5%;
+  color: var(--bernstein);
+}
+
+/* ── Leistungen: drei Ebenen ────────────────────────────────────────── */
+
+.ebenen {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+  gap: 1.5rem;
+}
+
+.ebene {
+  position: relative;
+  padding: 2rem 1.75rem;
+  border: 1px solid var(--kante);
+  border-radius: var(--rundung);
+  background: var(--platte);
+  transition: border-color .2s ease, transform .2s ease;
+}
+.ebene:hover { border-color: var(--kante-hell); transform: translateY(-3px); }
+
+/* Die dritte Ebene ist die, die den Unterschied macht — sie leuchtet */
+.ebene--betont {
+  border-color: var(--kante-hell);
+  background: linear-gradient(165deg, var(--violett-tief), var(--platte) 58%);
+}
+.ebene--betont:hover { border-color: var(--violett); }
+
+.ebene__nr {
+  margin: 0 0 1rem;
+  font-family: var(--schrift-mono);
+  font-size: 0.625rem;
+  font-stretch: 87.5%;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--violett-weich);
+}
+
+.ebene__titel {
+  margin: 0 0 0.9rem;
+  font-family: var(--schrift-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  font-stretch: 112%;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  hyphens: auto;
+}
+
+.ebene__text {
+  margin: 0 0 1.5rem;
+  font-size: 0.9375rem;
+  color: var(--gedaempft);
+  hyphens: auto;
+}
+
+.liste {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.65rem;
+  font-size: 0.875rem;
+  color: var(--gedaempft);
+}
+.liste li {
+  position: relative;
+  padding-left: 1.4rem;
+  hyphens: auto;
+}
+/* Kleine isometrische Raute statt Häkchen — Sprache der Maschine */
+.liste li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 7px;
+  height: 7px;
+  background: var(--violett);
+  transform: rotate(45deg) scaleY(.58);
+}
+
+/* ── Ablauf ─────────────────────────────────────────────────────────── */
+
+.schritte {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: 1.25rem;
+}
+
+.schritt {
+  position: relative;
+  padding: 1.75rem 1.5rem;
+  border: 1px solid var(--kante);
+  border-radius: var(--rundung);
+  background: var(--leere);
+}
+
+.schritt__nr {
+  margin: 0 0 1rem;
+  font-family: var(--schrift-display);
+  font-size: 2.25rem;
+  font-weight: 800;
+  font-stretch: 125%;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--violett-tief);
+}
+
+.schritt__titel {
+  margin: 0 0 0.7rem;
+  font-family: var(--schrift-display);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  font-stretch: 112%;
+  letter-spacing: -0.01em;
+}
+
+.schritt__text {
+  margin: 0 0 1.25rem;
+  font-size: 0.875rem;
+  color: var(--gedaempft);
+  hyphens: auto;
+}
+
+.schritt__dauer {
+  margin: 0;
+  font-family: var(--schrift-mono);
+  font-size: 0.625rem;
+  font-stretch: 87.5%;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--leise);
+}
+
+/* ── Beweis ─────────────────────────────────────────────────────────── */
+
+.messwerte {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+  gap: 1.25rem;
+  margin-bottom: 3rem;
+}
+
+.messwert {
+  padding: 1.5rem;
+  border: 1px solid var(--kante);
+  border-radius: var(--rundung);
+  background: var(--platte);
+}
+
+.messwert__zahl {
+  margin: 0 0 0.35rem;
+  font-family: var(--schrift-display);
+  font-size: 3rem;
+  font-weight: 800;
+  font-stretch: 125%;
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--violett-weich);
+}
+
+.messwert__label {
+  margin: 0 0 0.6rem;
+  font-family: var(--schrift-mono);
+  font-size: 0.625rem;
+  font-stretch: 87.5%;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--papier);
+}
+
+.messwert__text {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.5;
+  color: var(--leise);
+  hyphens: auto;
+}
+
+.code {
+  border: 1px solid var(--kante);
+  border-radius: var(--rundung);
+  background: var(--leere-alt);
+  overflow: hidden;
+}
+
+.code__kopf {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin: 0;
+  padding: 0.85rem 1.25rem;
+  border-bottom: 1px solid var(--kante);
+  font-family: var(--schrift-mono);
+  font-size: 0.625rem;
+  font-stretch: 87.5%;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--leise);
+}
+.code__punkt {
+  width: 7px;
+  height: 7px;
+  flex: none;
+  border-radius: 50%;
+  background: var(--bernstein);
+}
+
+.code__leib {
+  margin: 0;
+  min-width: 0;
+  padding: 1.4rem 1.25rem;
+  overflow-x: auto;
+  font-family: var(--schrift-mono);
+  font-size: 0.75rem;
+  font-stretch: 87.5%;
+  line-height: 1.75;
+  color: var(--violett-weich);
+  tab-size: 2;
+}
+
+.code__fuss {
+  margin: 0;
+  padding: 0.85rem 1.25rem;
+  border-top: 1px solid var(--kante);
+  font-size: 0.8125rem;
+  color: var(--leise);
+}
+
+/* ── Für wen ────────────────────────────────────────────────────────── */
+
+.branchen {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  gap: 1px;
+  background: var(--kante);
+  border: 1px solid var(--kante);
+  border-radius: var(--rundung);
+  overflow: hidden;
+}
+
+.branche {
+  display: grid;
+  gap: 0.4rem;
+  padding: 1.5rem;
+  background: var(--leere-alt);
+  transition: background .18s ease;
+}
+.branche:hover { background: var(--platte); }
+
+.branche__frage {
+  font-family: var(--schrift-mono);
+  font-size: 0.75rem;
+  font-stretch: 87.5%;
+  line-height: 1.5;
+  color: var(--violett-weich);
+}
+
+.branche__name {
+  font-size: 0.875rem;
+  color: var(--gedaempft);
+}
+
+/* ── Fragen ─────────────────────────────────────────────────────────── */
+
+.fragen {
+  border-top: 1px solid var(--kante);
+  max-width: 62rem;
+}
+
+.frage { border-bottom: 1px solid var(--kante); }
+
+.frage__kopf {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  padding: 1.4rem 0;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--schrift-display);
+  font-size: clamp(1rem, 1.5vw, 1.125rem);
+  font-weight: 600;
+  font-stretch: 112%;
+  letter-spacing: -0.01em;
+  transition: color .16s ease;
+}
+.frage__kopf::-webkit-details-marker { display: none; }
+.frage__kopf:hover { color: var(--violett-weich); }
+
+/* Plus, das sich zum Minus dreht */
+.frage__kopf::after {
+  content: '';
+  flex: none;
+  width: 13px;
+  height: 13px;
+  background:
+    linear-gradient(var(--violett-weich), var(--violett-weich)) center/13px 1.5px no-repeat,
+    linear-gradient(var(--violett-weich), var(--violett-weich)) center/1.5px 13px no-repeat;
+  transition: transform .22s ease;
+}
+.frage[open] .frage__kopf::after {
+  transform: rotate(90deg);
+  background:
+    linear-gradient(var(--violett-weich), var(--violett-weich)) center/13px 1.5px no-repeat;
+}
+
+.frage__leib {
+  padding: 0 0 1.6rem;
+  max-width: 68ch;
+}
+.frage__leib p {
+  margin: 0;
+  font-size: 0.9375rem;
+  color: var(--gedaempft);
+  hyphens: auto;
+}
+
+/* ── Kontakt ────────────────────────────────────────────────────────── */
+
+.abschnitt--kontakt { background: var(--leere-alt); }
+
+.kontakt {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
+  gap: clamp(2rem, 4vw, 4rem);
+  align-items: start;
+}
+
+.kontakt__text .blei { margin-bottom: 1.75rem; }
+
+.kontakt__punkte {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.55rem;
+  font-size: 0.9375rem;
+  color: var(--gedaempft);
+}
+.kontakt__punkte li {
+  position: relative;
+  padding-left: 1.4rem;
+}
+.kontakt__punkte li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 7px;
+  height: 7px;
+  background: var(--bernstein);
+  transform: rotate(45deg) scaleY(.58);
+}
+
+.kontakt__karte {
+  padding: 2rem;
+  border: 1px solid var(--kante-hell);
+  border-radius: var(--rundung);
+  background: linear-gradient(165deg, var(--violett-tief), var(--platte) 62%);
+}
+
+.kontakt__label {
+  margin: 0 0 0.35rem;
+  font-family: var(--schrift-mono);
+  font-size: 0.625rem;
+  font-stretch: 87.5%;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--leise);
+}
+
+.kontakt__mail,
+.kontakt__tel {
+  display: block;
+  margin-bottom: 1.5rem;
+  font-family: var(--schrift-display);
+  font-size: clamp(1.0625rem, 2vw, 1.375rem);
+  font-weight: 700;
+  font-stretch: 112%;
+  letter-spacing: -0.015em;
+  text-decoration: none;
+  color: var(--papier);
+  word-break: break-word;
+  transition: color .16s ease;
+}
+.kontakt__mail:hover,
+.kontakt__tel:hover { color: var(--violett-weich); }
+
+.kontakt__hinweis {
+  margin: 0;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--kante);
+  font-family: var(--schrift-mono);
+  font-size: 0.625rem;
+  font-stretch: 87.5%;
+  letter-spacing: 0.06em;
+  color: var(--bernstein);
+}
+
+/* ── Rechtliche Seiten ──────────────────────────────────────────────── */
+
+.recht { max-width: 46rem; }
+
+.recht__titel {
+  margin: 2.75rem 0 0.75rem;
+  font-family: var(--schrift-display);
+  font-size: 1.0625rem;
+  font-weight: 700;
+  font-stretch: 112%;
+  letter-spacing: -0.01em;
+}
+
+.recht__text {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.7;
+  color: var(--gedaempft);
+}
+.recht__text em {
+  color: var(--bernstein);
+  font-style: normal;
+}
+
+.warnung {
+  margin: 2rem 0 1rem;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid color-mix(in srgb, var(--bernstein) 40%, transparent);
+  border-left-width: 2px;
+  border-left-color: var(--bernstein);
+  border-radius: var(--rundung);
+  background: color-mix(in srgb, var(--bernstein) 7%, transparent);
+}
+.warnung p {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.65;
+  color: var(--gedaempft);
+}
+.warnung strong { color: var(--bernstein); font-weight: 600; }
+
+/* ── Fußzeile ───────────────────────────────────────────────────────── */
+
+.fuss {
+  padding-block: 2.5rem;
+  border-top: 1px solid var(--kante);
+}
+
+.fuss__zeile {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1rem 2rem;
+  font-size: 0.8125rem;
+  color: var(--leise);
+}
+
+.fuss__marke {
+  margin: 0;
+  font-family: var(--schrift-display);
+  font-weight: 700;
+  font-stretch: 112%;
+  color: var(--papier);
+}
+
+.fuss__nav { display: flex; gap: 1.5rem; margin-right: auto; }
+.fuss__nav a { color: var(--leise); text-decoration: none; }
+.fuss__nav a:hover { color: var(--papier); }
+
+.fuss__note { margin: 0; }
+
+/* ── Auf schmalen Geräten ───────────────────────────────────────────── */
+
+@media (max-width: 60rem) {
+  /* Gestapelt zuerst die Aussage, dann das Bild — wer auf dem Telefon
+     landet, soll nicht an einem Diagramm vorbeiscrollen müssen. */
+  .hero__raster { grid-template-columns: 1fr; }
+
+  /* Navigation bleibt erreichbar — sie scrollt seitlich, statt zu verschwinden.
+     Raster statt Flex, damit Marke und Knopf verlässlich in einer Zeile
+     stehen und die Navigation darunter die volle Breite bekommt. */
+  .kopf__zeile {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.6rem 1rem;
+    padding-block: 0.75rem;
+    min-height: 0;
+  }
+  .marke { margin-right: 0; min-width: 0; }
+  .marke__text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .knopf--klein { margin-left: 0; }
+  .nav { grid-column: 1 / -1; }
+  .nav {
+    order: 3;
+    width: 100%;
+    /* Ohne min-width: 0 verweigert das Flex-Element das Schrumpfen und
+       overflow-x bliebe wirkungslos — die Seite würde seitlich scrollen. */
+    min-width: 0;
+    gap: 1.25rem;
+    overflow-x: auto;
+    padding-bottom: 0.25rem;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav a { white-space: nowrap; }
+  .knopf--klein { margin-left: auto; }
+}
+
+/* Unterhalb dieser Breite würden die beiden Karten die Maschine vollständig
+   verdecken. Statt sie zu verkleinern, bis sie unlesbar sind, läuft die
+   Erzählung hier von oben nach unten: Anfrage, Maschine, Antwort. */
+@media (max-width: 34rem) {
+  .maschine { display: grid; gap: 0.75rem; }
+  .maschine__bild { order: 2; }
+  .chip {
+    position: static;
+    width: 100%;
+    backdrop-filter: none;
+    box-shadow: none;
+  }
+  .chip--frage { order: 1; }
+  .chip--antwort { order: 3; }
+}
+
+@media (max-width: 32rem) {
+  .marke__text { font-size: 0.8125rem; }
+  .hero__aktionen .knopf { width: 100%; }
+  .messwert__zahl { font-size: 2.5rem; }
+  .code__leib { font-size: 0.6875rem; padding-inline: 1rem; }
+}
+
+/* ── Bewegung sparsam ───────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+  .chip { opacity: 1 !important; transform: none !important; }
+}

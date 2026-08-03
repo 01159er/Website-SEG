@@ -1,0 +1,31 @@
+# Scholz Growth Engine
+# Alle Crawler willkommen — auch die von Antwortsystemen.
+
+User-agent: *
+Allow: /
+
+# Crawler der KI-Antwortsysteme ausdrücklich zugelassen.
+# Wer in Antworten vorkommen will, muss sich lesen lassen.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+# TODO: Domain vor der Veröffentlichung anpassen.
+Sitemap: https://scholz-growth-engine.de/sitemap.xml
