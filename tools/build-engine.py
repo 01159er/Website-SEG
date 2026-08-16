@@ -23,19 +23,20 @@ UNIT = 26  # Pixel je Welteinheit
 
 # --- Palette (deckungsgleich mit assets/css/main.css) -----------------------
 # Jede Ebene: Deckfläche, +x-Fläche, +y-Fläche, Kante.
+# Nach oben hin heller — oben tritt die Anfrage ein.
 TIERS = {
-    "sockel": ("#141032", "#0D0A22", "#080615", "#2C2359"),
-    "unten":  ("#1E1745", "#140F31", "#0C0921", "#3A2E77"),
-    "mitte":  ("#2A1F60", "#1C1443", "#110C2C", "#4A3A9B"),
-    "oben":   ("#3A2B85", "#26195E", "#170F3E", "#6C4BFF"),
+    "sockel": ("#221E3C", "#191631", "#121026", "#3B3468"),
+    "unten":  ("#2B2550", "#201B41", "#171331", "#463D82"),
+    "mitte":  ("#372E6B", "#291F55", "#1D1642", "#564A9C"),
+    "oben":   ("#4B3F92", "#372C72", "#261D55", "#7C6BF5"),
 }
-RAIL = ("#1B1636", "#110C24", "#0A0716", "#3A2E77")
-TRACK = ("#241B52", "#1A123C", "#140D2E", "#4A3A9B")
-KNOB = ("#7C5CFF", "#4A32C7", "#33208F", "#9B84FF")
+RAIL = ("#2A2549", "#1F1A38", "#161228", "#463D82")
+TRACK = ("#372E6B", "#2A2152", "#201741", "#564A9C")
+KNOB = ("#8E7FFF", "#5F4CD6", "#43339E", "#B4A9FF")
 
-VIOLETT = "#6C4BFF"
-BERNSTEIN = "#FFA23A"
-RASTER = "#241C48"
+INDIGO = "#7C6BF5"
+PFIRSICH = "#FFAD7A"
+RASTER = "#312A57"
 
 _bounds = [1e9, 1e9, -1e9, -1e9]  # minx, miny, maxx, maxy
 
@@ -109,7 +110,7 @@ def build():
     # Deckfläche bündig mit der Oberkante der obersten Ebene (z = 2.2).
     parts.append(group(box(-1.4, 3.55, 1.98, 4.2, 0.9, 0.22, RAIL)))
     parts.append(
-        group(*(dot(-1.0 + i * 0.62, 4.0, 2.21, 0.1, VIOLETT, "eng-in") for i in range(4)))
+        group(*(dot(-1.0 + i * 0.62, 4.0, 2.21, 0.1, INDIGO, "eng-in") for i in range(4)))
     )
 
     # --- Drei Ebenen, gestapelt und nach oben hin heller --------------------
@@ -133,7 +134,7 @@ def build():
     parts.append(group(box(8.15, 4.55, 0.33, 3.9, 0.9, 0.22, RAIL)))
     parts.append(group(box(11.1, 4.85, -0.5, 0.3, 0.3, 0.83, RAIL)))  # Stütze
     parts.append(
-        group(*(dot(9.15 + i * 0.62, 5.0, 0.56, 0.1, BERNSTEIN, "eng-out") for i in range(4)))
+        group(*(dot(9.15 + i * 0.62, 5.0, 0.56, 0.1, PFIRSICH, "eng-out") for i in range(4)))
     )
 
     body = "\n  ".join(parts)

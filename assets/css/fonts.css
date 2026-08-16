@@ -1,28 +1,26 @@
-/* Selbstgehostet — keine externen Requests. */
+/* Selbstgehostet — keine externen Requests.
+   Erzeugt von tools/get-fonts.py, nicht von Hand bearbeiten. */
 
 @font-face {
-  font-family: 'Archivo';
-  font-style: normal;
-  font-weight: 400 900;
-  font-stretch: 62% 125%;
-  font-display: swap;
-  src: url(../fonts/archivo.woff2) format('woff2');
-}
-
-@font-face {
-  font-family: 'Instrument Sans';
+  font-family: 'Space Grotesk';
   font-style: normal;
   font-weight: 400 700;
-  font-stretch: 100%;
   font-display: swap;
-  src: url(../fonts/instrument-sans.woff2) format('woff2');
+  src: url(../fonts/space-grotesk.woff2) format('woff2');
 }
 
 @font-face {
-  font-family: 'Martian Mono';
+  font-family: 'DM Sans';
   font-style: normal;
-  font-weight: 300 700;
-  font-stretch: 75% 112.5%;
+  font-weight: 400 700;
   font-display: swap;
-  src: url(../fonts/martian-mono.woff2) format('woff2');
+  src: url(../fonts/dm-sans.woff2) format('woff2');
+}
+
+@font-face {
+  font-family: 'DM Mono';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(../fonts/dm-mono.woff2) format('woff2');
 }

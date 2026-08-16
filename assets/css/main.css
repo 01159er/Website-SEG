@@ -1,44 +1,54 @@
 /* ═══════════════════════════════════════════════════════════════════════
    Scholz Growth Engine
    ───────────────────────────────────────────────────────────────────────
-   Gestaltungsprinzip: Breite ist Hierarchie.
-   Die Maschine im Hero besteht aus gestapelten Platten unterschiedlicher
-   Grundfläche — die Typografie macht dasselbe. Archivo läuft auf 125 %
-   Breite für Überschriften, Instrument Sans bleibt schmal für Fließtext,
-   Martian Mono liegt breit unter den Daten. Drei Breiten, drei Rollen.
+   Typografie (Auswahl nach ui-ux-pro-max, Paarung „Tech Startup“):
+   Space Grotesk stellt die Überschriften — geometrisch, flache Endungen,
+   ein eigenwilliges G. DM Sans trägt den Fließtext — rund, offen, warm.
+   Die Paarung stellt Präzision neben Zugänglichkeit, und genau das ist
+   das Angebot: technische Arbeit, verständlich erklärt.
+
+   Farbe: Der Grund ist kein Schwarz, sondern ein tiefes Indigo-Pflaume.
+   Indigo führt, Pfirsich markiert ausschließlich das Ergebnis, Mint
+   bestätigt. Drei Töne statt eines grellen Akzents auf Schwarz.
    ═══════════════════════════════════════════════════════════════════════ */
 
 :root {
-  /* Grund — Fast-Schwarz mit Violettstich, nie reines #000 */
-  --leere:        #08070E;
-  --leere-alt:    #0C0A18;
-  --platte:       #14102A;
-  --platte-hoch:  #1B1538;
+  /* Grund — tief, aber warm; nie reines Schwarz */
+  --grund:        #13111F;
+  --grund-alt:    #1A1730;
+  --platte:       #221E3C;
+  --platte-hoch:  #2A2549;
 
   /* Kanten */
-  --kante:        #241C48;
-  --kante-hell:   #3A2E77;
+  --kante:        #332C5C;
+  --kante-hell:   #4A4180;
 
-  /* Akzente — Violett führt, Bernstein markiert ausschließlich das Ergebnis */
-  --violett:      #6C4BFF;
-  --violett-weich:#A08CFF;
-  --violett-tief: #2A1F60;
-  --bernstein:    #FFA23A;
+  /* Akzente. Der Grundton ist so gewählt, dass weiße Schrift darauf
+     4,5:1 erreicht — deshalb #6353E0 und nicht heller. */
+  --indigo:       #6353E0;
+  --indigo-hell:  #6E5CEC;   /* Hover, hält 4,77:1 mit Weiß */
+  --indigo-weich: #B4A9FF;   /* Text auf dunklem Grund */
+  --indigo-tief:  #362B78;   /* nur für Verläufe, nie für Schrift */
+  --indigo-ziffer:#6355BE;   /* Schrittnummern, 3,17:1 als Großtext */
+  --pfirsich:     #FFAD7A;
+  --mint:         #6FE0C4;
 
   /* Schrift */
-  --papier:       #F4F2FA;
-  --gedaempft:    #A9A2C2;
-  /* Auf allen drei Grundtönen über 4,5:1 — geprüft, nicht geschätzt. */
-  --leise:        #8A82A8;
+  --papier:       #F6F4FD;
+  --gedaempft:    #BDB6D6;
+  --leise:        #9990BA;
 
-  --schrift-display: 'Archivo', ui-sans-serif, system-ui, sans-serif;
-  --schrift-text:    'Instrument Sans', ui-sans-serif, system-ui, sans-serif;
-  --schrift-mono:    'Martian Mono', ui-monospace, 'SFMono-Regular', monospace;
+  --schrift-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  --schrift-text:    'DM Sans', ui-sans-serif, system-ui, sans-serif;
+  --schrift-mono:    'DM Mono', ui-monospace, 'SFMono-Regular', monospace;
 
-  --bahn: 76rem;      /* Satzbreite */
-  --luft: clamp(4.5rem, 9vw, 8.5rem);   /* vertikaler Abschnittsabstand */
-  --rand: clamp(1.25rem, 4vw, 2.5rem);  /* seitlicher Rand */
-  --rundung: 4px;     /* fast eckig — die Maschine hat harte Kanten */
+  --bahn: 76rem;
+  --luft: clamp(4.5rem, 9vw, 8.5rem);
+  --rand: clamp(1.25rem, 4vw, 2.5rem);
+
+  /* Weichere Radien — der wichtigste Hebel gegen den strengen Eindruck */
+  --rundung:       16px;
+  --rundung-klein: 10px;
 }
 
 /* ── Grundlagen ─────────────────────────────────────────────────────── */
@@ -53,7 +63,7 @@ html {
 
 body {
   margin: 0;
-  background: var(--leere);
+  background: var(--grund);
   color: var(--papier);
   font-family: var(--schrift-text);
   font-size: 1.0625rem;
@@ -67,12 +77,12 @@ img, svg { max-width: 100%; height: auto; display: block; }
 a { color: inherit; }
 
 :focus-visible {
-  outline: 2px solid var(--violett-weich);
+  outline: 2px solid var(--indigo-weich);
   outline-offset: 3px;
-  border-radius: 2px;
+  border-radius: 3px;
 }
 
-::selection { background: var(--violett); color: #fff; }
+::selection { background: var(--indigo); color: #fff; }
 
 .skip {
   position: absolute;
@@ -80,7 +90,7 @@ a { color: inherit; }
   top: 0;
   z-index: 100;
   padding: 0.75rem 1.25rem;
-  background: var(--violett);
+  background: var(--indigo);
   color: #fff;
   font-weight: 600;
   text-decoration: none;
@@ -100,25 +110,21 @@ a { color: inherit; }
   margin: 0 0 1.5rem;
   font-family: var(--schrift-mono);
   font-size: 0.6875rem;
-  font-weight: 500;
-  font-stretch: 87.5%;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--violett-weich);
+  color: var(--indigo-weich);
 }
 .augenbraue--gedaempft { color: var(--leise); }
 
 .titel {
   margin: 0 0 1.25rem;
   font-family: var(--schrift-display);
-  font-size: clamp(1.75rem, 4.4vw, 3.35rem);
-  font-weight: 800;
-  font-stretch: 125%;
-  line-height: 1.02;
-  letter-spacing: -0.025em;
+  font-size: clamp(1.85rem, 4.4vw, 3.3rem);
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -0.03em;
   text-wrap: balance;
-  /* Deutsche Komposita sprengen sonst schmale Viewports —
-     „Arbeitsprobe“, „spezialisiert“, „Antwortschicht“. */
+  /* Deutsche Komposita sprengen sonst schmale Viewports */
   hyphens: auto;
   overflow-wrap: break-word;
 }
@@ -126,7 +132,7 @@ a { color: inherit; }
 .blei {
   margin: 0 0 3.5rem;
   font-size: clamp(1.0625rem, 1.35vw, 1.1875rem);
-  line-height: 1.6;
+  line-height: 1.62;
   color: var(--gedaempft);
   hyphens: auto;
 }
@@ -134,15 +140,17 @@ a { color: inherit; }
 
 .hinweis {
   margin: 3.5rem 0 0;
-  padding: 1.25rem 1.5rem;
-  border-left: 2px solid var(--violett);
+  padding: 1.35rem 1.6rem;
+  border: 1px solid var(--kante);
+  border-left: 3px solid var(--indigo);
+  border-radius: var(--rundung-klein);
   background: var(--platte);
   font-size: 0.9375rem;
   color: var(--gedaempft);
   max-width: 68ch;
 }
 .hinweis strong { color: var(--papier); font-weight: 600; }
-.hinweis em { color: var(--violett-weich); font-style: normal; }
+.hinweis em { color: var(--indigo-weich); font-style: normal; }
 
 /* ── Knöpfe ─────────────────────────────────────────────────────────── */
 
@@ -151,29 +159,41 @@ a { color: inherit; }
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  padding: 0.9rem 1.6rem;
-  background: var(--violett);
+  padding: 0.9rem 1.7rem;
+  background: var(--indigo);
   color: #fff;
-  border: 1px solid var(--violett);
-  border-radius: var(--rundung);
+  border: 1px solid var(--indigo);
+  border-radius: var(--rundung-klein);
   font-family: var(--schrift-text);
   font-size: 0.9375rem;
   font-weight: 600;
+  letter-spacing: -0.005em;
   text-decoration: none;
   white-space: nowrap;
-  transition: background .18s ease, border-color .18s ease, transform .18s ease;
+  transition: background .18s ease, border-color .18s ease,
+              transform .18s ease, box-shadow .18s ease;
 }
-.knopf:hover { background: #7d5fff; border-color: #7d5fff; transform: translateY(-1px); }
-.knopf:active { transform: translateY(0); }
+.knopf:hover {
+  background: var(--indigo-hell);
+  border-color: var(--indigo-hell);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 24px rgba(99, 83, 224, .34);
+}
+.knopf:active { transform: translateY(0); box-shadow: none; }
 
 .knopf--leer {
   background: transparent;
   color: var(--papier);
   border-color: var(--kante-hell);
+  box-shadow: none;
 }
-.knopf--leer:hover { background: var(--platte); border-color: var(--violett); }
+.knopf--leer:hover {
+  background: var(--platte);
+  border-color: var(--indigo);
+  box-shadow: none;
+}
 
-.knopf--klein { padding: 0.6rem 1.1rem; font-size: 0.875rem; }
+.knopf--klein { padding: 0.6rem 1.2rem; font-size: 0.875rem; }
 .knopf--voll  { width: 100%; margin-top: 1.75rem; }
 
 /* ── Kopfzeile ──────────────────────────────────────────────────────── */
@@ -182,7 +202,7 @@ a { color: inherit; }
   position: sticky;
   top: 0;
   z-index: 50;
-  background: color-mix(in srgb, var(--leere) 88%, transparent);
+  background: color-mix(in srgb, var(--grund) 86%, transparent);
   backdrop-filter: blur(14px);
   border-bottom: 1px solid var(--kante);
 }
@@ -201,9 +221,8 @@ a { color: inherit; }
   text-decoration: none;
   font-family: var(--schrift-display);
   font-weight: 700;
-  font-stretch: 112%;
   font-size: 0.9375rem;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
   margin-right: auto;
 }
 
@@ -217,10 +236,11 @@ a { color: inherit; }
 .marke__glyphe span {
   display: block;
   height: 3px;
+  border-radius: 1px;
   background: var(--kante-hell);
   transform: skewX(-32deg);
 }
-.marke__glyphe span:nth-child(1) { width: 60%; background: var(--violett); margin-left: 40%; }
+.marke__glyphe span:nth-child(1) { width: 60%; background: var(--indigo); margin-left: 40%; }
 .marke__glyphe span:nth-child(2) { width: 80%; margin-left: 20%; }
 .marke__glyphe span:nth-child(3) { width: 100%; }
 
@@ -244,16 +264,27 @@ a { color: inherit; }
   overflow: hidden;
 }
 
-/* Violetter Lichtschein hinter der Maschine */
-.hero::before {
+/* Zwei Lichtscheine statt einem — der warme unten rechts holt die
+   Pfirsich-Seite ins Bild und nimmt der Fläche die Strenge. */
+.hero::before,
+.hero::after {
   content: '';
   position: absolute;
-  top: 12%;
-  right: -10%;
-  width: min(70vw, 780px);
-  aspect-ratio: 1;
-  background: radial-gradient(circle, rgba(108,75,255,.20), transparent 68%);
   pointer-events: none;
+  aspect-ratio: 1;
+  border-radius: 50%;
+}
+.hero::before {
+  top: 6%;
+  right: -8%;
+  width: min(66vw, 720px);
+  background: radial-gradient(circle, rgba(124,107,245,.26), transparent 68%);
+}
+.hero::after {
+  bottom: -14%;
+  right: 14%;
+  width: min(44vw, 460px);
+  background: radial-gradient(circle, rgba(255,173,122,.11), transparent 70%);
 }
 
 .hero__raster {
@@ -267,25 +298,20 @@ a { color: inherit; }
 .hero__titel {
   margin: 0 0 1.75rem;
   font-family: var(--schrift-display);
-  font-size: clamp(2.1rem, 5.6vw, 4.5rem);
-  font-weight: 800;
-  font-stretch: 125%;
-  line-height: 0.98;
-  letter-spacing: -0.035em;
+  font-size: clamp(2.15rem, 5.4vw, 4.25rem);
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.04em;
   hyphens: auto;
   overflow-wrap: break-word;
 }
-.hero__titel em {
-  font-style: normal;
-  color: var(--violett-weich);
-}
+.hero__titel em { font-style: normal; color: var(--indigo-weich); }
 .hero__titel-zwei {
   display: block;
-  margin-top: 0.5rem;
+  margin-top: 0.6rem;
   font-size: 0.5em;
-  font-stretch: 100%;
-  font-weight: 600;
-  line-height: 1.12;
+  font-weight: 500;
+  line-height: 1.16;
   letter-spacing: -0.02em;
   color: var(--gedaempft);
 }
@@ -298,53 +324,40 @@ a { color: inherit; }
   hyphens: auto;
 }
 
-.hero__aktionen {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.875rem;
-}
+.hero__aktionen { display: flex; flex-wrap: wrap; gap: 0.875rem; }
 
 .hero__fussnote {
   margin: 1.5rem 0 0;
   font-family: var(--schrift-mono);
   font-size: 0.6875rem;
-  font-stretch: 87.5%;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.04em;
   color: var(--leise);
 }
 
 /* ── Die Maschine ───────────────────────────────────────────────────── */
 
-.maschine {
-  position: relative;
-  width: 100%;
-}
-
-.maschine__bild {
-  width: 100%;
-  height: auto;
-}
+.maschine { position: relative; width: 100%; }
+.maschine__bild { width: 100%; height: auto; }
 
 .chip {
   position: absolute;
   margin: 0;
-  padding: 0.7rem 0.9rem;
-  width: min(46%, 15rem);
-  background: color-mix(in srgb, var(--platte-hoch) 92%, transparent);
+  padding: 0.8rem 1rem;
+  width: min(46%, 15.5rem);
+  background: color-mix(in srgb, var(--platte-hoch) 93%, transparent);
   backdrop-filter: blur(8px);
   border: 1px solid var(--kante-hell);
-  border-radius: var(--rundung);
-  box-shadow: 0 12px 32px rgba(0,0,0,.55);
+  border-radius: var(--rundung-klein);
+  box-shadow: 0 14px 36px rgba(8, 6, 20, .5);
 }
 
 .chip__kopf {
   font-family: var(--schrift-mono);
   font-size: 0.5625rem;
-  font-stretch: 87.5%;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.11em;
   text-transform: uppercase;
   color: var(--leise);
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.35rem;
 }
 
 .chip__leib {
@@ -354,36 +367,32 @@ a { color: inherit; }
   color: var(--papier);
 }
 
-.chip--frage {
-  top: 2%;
-  left: 0;
-  border-color: var(--violett);
-}
-.chip--frage .chip__leib { font-family: var(--schrift-mono); font-size: 0.75rem; font-stretch: 87.5%; }
+.chip--frage { top: 2%; left: 0; border-color: var(--indigo); }
+.chip--frage .chip__leib { font-family: var(--schrift-mono); font-size: 0.75rem; }
 
 .chip--antwort {
   bottom: 12%;
   right: 0;
-  border-color: color-mix(in srgb, var(--bernstein) 55%, transparent);
+  border-color: color-mix(in srgb, var(--pfirsich) 55%, transparent);
 }
 .chip--antwort mark {
   background: none;
-  color: var(--bernstein);
+  color: var(--pfirsich);
   font-weight: 600;
 }
+
 .chip__quelle {
   display: flex;
   align-items: center;
   gap: 0.4rem;
-  margin: 0.5rem 0 0;
-  padding-top: 0.5rem;
+  margin: 0.55rem 0 0;
+  padding-top: 0.55rem;
   border-top: 1px solid var(--kante);
   font-family: var(--schrift-mono);
   font-size: 0.5625rem;
-  font-stretch: 87.5%;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.09em;
   text-transform: uppercase;
-  color: var(--bernstein);
+  color: var(--pfirsich);
 }
 .chip__quelle::before {
   content: '';
@@ -391,12 +400,11 @@ a { color: inherit; }
   height: 5px;
   flex: none;
   border-radius: 50%;
-  background: var(--bernstein);
+  background: var(--pfirsich);
 }
 
-/* Beide Karten stehen dauerhaft — die Aussage des Heros muss auch im
-   Standbild lesbar sein. Bewegt wird nur der Punkt, der die Nennung
-   markiert, im Takt der Laufpunkte im SVG (3,6 s). */
+/* Beide Karten stehen dauerhaft — die Aussage muss auch im Standbild
+   lesbar sein. Bewegt wird nur der Punkt, im Takt der Laufpunkte (3,6 s). */
 @media (prefers-reduced-motion: no-preference) {
   .chip__quelle::before { animation: quelle-puls 3.6s ease-in-out infinite; }
   @keyframes quelle-puls {
@@ -412,9 +420,9 @@ a { color: inherit; }
   padding-block: var(--luft);
   border-top: 1px solid var(--kante);
 }
-.abschnitt--alt { background: var(--leere-alt); }
+.abschnitt--alt { background: var(--grund-alt); }
 
-/* ── Gegenüberstellung: Trefferliste gegen Antwort ──────────────────── */
+/* ── Gegenüberstellung ──────────────────────────────────────────────── */
 
 .gegenueber {
   display: grid;
@@ -423,14 +431,14 @@ a { color: inherit; }
 }
 
 .gegenueber__seite {
-  padding: 1.75rem;
+  padding: 1.9rem;
   border: 1px solid var(--kante);
   border-radius: var(--rundung);
   background: var(--platte);
 }
 .gegenueber__seite--neu {
   border-color: var(--kante-hell);
-  background: linear-gradient(160deg, var(--violett-tief), var(--platte) 62%);
+  background: linear-gradient(158deg, var(--indigo-tief), var(--platte) 64%);
 }
 
 .gegenueber__titel {
@@ -438,8 +446,7 @@ a { color: inherit; }
   font-family: var(--schrift-display);
   font-size: 1.375rem;
   font-weight: 700;
-  font-stretch: 112%;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.025em;
 }
 
 .gegenueber__text {
@@ -450,12 +457,7 @@ a { color: inherit; }
 
 .serp { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.6rem; }
 .serp__zeile { display: flex; align-items: center; gap: 0.75rem; }
-.serp__balken {
-  height: 8px;
-  flex: 1;
-  background: var(--kante);
-  border-radius: 2px;
-}
+.serp__balken { height: 8px; flex: 1; background: var(--kante); border-radius: 4px; }
 .serp__zeile:nth-child(2) .serp__balken { max-width: 78%; }
 .serp__zeile:nth-child(4) .serp__balken { max-width: 66%; }
 .serp__zeile:nth-child(5) .serp__balken { max-width: 84%; }
@@ -464,8 +466,7 @@ a { color: inherit; }
 .serp__ihr {
   font-family: var(--schrift-mono);
   font-size: 0.625rem;
-  font-stretch: 87.5%;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
   color: var(--leise);
   white-space: nowrap;
@@ -476,7 +477,7 @@ a { color: inherit; }
   height: 8px;
   margin: 0;
   background: var(--kante-hell);
-  border-radius: 2px;
+  border-radius: 4px;
   opacity: .75;
 }
 .antwortblock__zeile--kurz { width: 62%; }
@@ -489,16 +490,15 @@ a { color: inherit; }
   gap: 0.5rem;
 }
 .antwortblock__namen li {
-  padding: 0.3rem 0.65rem;
-  border: 1px solid color-mix(in srgb, var(--bernstein) 45%, transparent);
-  border-radius: 2px;
+  padding: 0.32rem 0.7rem;
+  border: 1px solid color-mix(in srgb, var(--pfirsich) 45%, transparent);
+  border-radius: 999px;
   font-family: var(--schrift-mono);
   font-size: 0.625rem;
-  font-stretch: 87.5%;
-  color: var(--bernstein);
+  color: var(--pfirsich);
 }
 
-/* ── Leistungen: drei Ebenen ────────────────────────────────────────── */
+/* ── Leistungen ─────────────────────────────────────────────────────── */
 
 .ebenen {
   display: grid;
@@ -508,7 +508,7 @@ a { color: inherit; }
 
 .ebene {
   position: relative;
-  padding: 2rem 1.75rem;
+  padding: 2.1rem 1.9rem;
   border: 1px solid var(--kante);
   border-radius: var(--rundung);
   background: var(--platte);
@@ -516,21 +516,19 @@ a { color: inherit; }
 }
 .ebene:hover { border-color: var(--kante-hell); transform: translateY(-3px); }
 
-/* Die dritte Ebene ist die, die den Unterschied macht — sie leuchtet */
 .ebene--betont {
   border-color: var(--kante-hell);
-  background: linear-gradient(165deg, var(--violett-tief), var(--platte) 58%);
+  background: linear-gradient(162deg, var(--indigo-tief), var(--platte) 60%);
 }
-.ebene--betont:hover { border-color: var(--violett); }
+.ebene--betont:hover { border-color: var(--indigo); }
 
 .ebene__nr {
   margin: 0 0 1rem;
   font-family: var(--schrift-mono);
   font-size: 0.625rem;
-  font-stretch: 87.5%;
-  letter-spacing: 0.14em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--violett-weich);
+  color: var(--indigo-weich);
 }
 
 .ebene__titel {
@@ -538,9 +536,8 @@ a { color: inherit; }
   font-family: var(--schrift-display);
   font-size: 1.25rem;
   font-weight: 700;
-  font-stretch: 112%;
-  line-height: 1.2;
-  letter-spacing: -0.015em;
+  line-height: 1.24;
+  letter-spacing: -0.025em;
   hyphens: auto;
 }
 
@@ -560,12 +557,8 @@ a { color: inherit; }
   font-size: 0.875rem;
   color: var(--gedaempft);
 }
-.liste li {
-  position: relative;
-  padding-left: 1.4rem;
-  hyphens: auto;
-}
-/* Kleine isometrische Raute statt Häkchen — Sprache der Maschine */
+.liste li { position: relative; padding-left: 1.5rem; hyphens: auto; }
+/* Kleine isometrische Raute — Sprache der Maschine */
 .liste li::before {
   content: '';
   position: absolute;
@@ -573,7 +566,8 @@ a { color: inherit; }
   top: 0.55em;
   width: 7px;
   height: 7px;
-  background: var(--violett);
+  border-radius: 1px;
+  background: var(--indigo);
   transform: rotate(45deg) scaleY(.58);
 }
 
@@ -590,21 +584,20 @@ a { color: inherit; }
 
 .schritt {
   position: relative;
-  padding: 1.75rem 1.5rem;
+  padding: 1.9rem 1.6rem;
   border: 1px solid var(--kante);
   border-radius: var(--rundung);
-  background: var(--leere);
+  background: var(--grund);
 }
 
 .schritt__nr {
   margin: 0 0 1rem;
   font-family: var(--schrift-display);
   font-size: 2.25rem;
-  font-weight: 800;
-  font-stretch: 125%;
+  font-weight: 700;
   line-height: 1;
-  letter-spacing: -0.04em;
-  color: var(--violett-tief);
+  letter-spacing: -0.05em;
+  color: var(--indigo-ziffer);
 }
 
 .schritt__titel {
@@ -612,8 +605,7 @@ a { color: inherit; }
   font-family: var(--schrift-display);
   font-size: 1.0625rem;
   font-weight: 700;
-  font-stretch: 112%;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
 }
 
 .schritt__text {
@@ -627,8 +619,7 @@ a { color: inherit; }
   margin: 0;
   font-family: var(--schrift-mono);
   font-size: 0.625rem;
-  font-stretch: 87.5%;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.09em;
   text-transform: uppercase;
   color: var(--leise);
 }
@@ -643,7 +634,7 @@ a { color: inherit; }
 }
 
 .messwert {
-  padding: 1.5rem;
+  padding: 1.6rem;
   border: 1px solid var(--kante);
   border-radius: var(--rundung);
   background: var(--platte);
@@ -653,19 +644,17 @@ a { color: inherit; }
   margin: 0 0 0.35rem;
   font-family: var(--schrift-display);
   font-size: 3rem;
-  font-weight: 800;
-  font-stretch: 125%;
+  font-weight: 700;
   line-height: 1;
-  letter-spacing: -0.04em;
-  color: var(--violett-weich);
+  letter-spacing: -0.05em;
+  color: var(--indigo-weich);
 }
 
 .messwert__label {
   margin: 0 0 0.6rem;
   font-family: var(--schrift-mono);
   font-size: 0.625rem;
-  font-stretch: 87.5%;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.11em;
   text-transform: uppercase;
   color: var(--papier);
 }
@@ -673,7 +662,7 @@ a { color: inherit; }
 .messwert__text {
   margin: 0;
   font-size: 0.8125rem;
-  line-height: 1.5;
+  line-height: 1.55;
   color: var(--leise);
   hyphens: auto;
 }
@@ -681,7 +670,7 @@ a { color: inherit; }
 .code {
   border: 1px solid var(--kante);
   border-radius: var(--rundung);
-  background: var(--leere-alt);
+  background: var(--grund-alt);
   overflow: hidden;
 }
 
@@ -690,12 +679,11 @@ a { color: inherit; }
   align-items: center;
   gap: 0.6rem;
   margin: 0;
-  padding: 0.85rem 1.25rem;
+  padding: 0.9rem 1.4rem;
   border-bottom: 1px solid var(--kante);
   font-family: var(--schrift-mono);
   font-size: 0.625rem;
-  font-stretch: 87.5%;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
   color: var(--leise);
 }
@@ -704,25 +692,27 @@ a { color: inherit; }
   height: 7px;
   flex: none;
   border-radius: 50%;
-  background: var(--bernstein);
+  background: var(--mint);
 }
 
 .code__leib {
   margin: 0;
   min-width: 0;
-  padding: 1.4rem 1.25rem;
+  padding: 1.5rem 1.4rem;
   overflow-x: auto;
   font-family: var(--schrift-mono);
   font-size: 0.75rem;
-  font-stretch: 87.5%;
-  line-height: 1.75;
-  color: var(--violett-weich);
+  line-height: 1.8;
+  color: var(--indigo-weich);
   tab-size: 2;
 }
+/* Der Browser-Standard setzt für <code> eine eigene Schrift und schlägt
+   die Vererbung vom <pre> — ohne das hier läuft der Block nicht in DM Mono. */
+.code__leib code { font: inherit; color: inherit; }
 
 .code__fuss {
   margin: 0;
-  padding: 0.85rem 1.25rem;
+  padding: 0.9rem 1.4rem;
   border-top: 1px solid var(--kante);
   font-size: 0.8125rem;
   color: var(--leise);
@@ -735,7 +725,7 @@ a { color: inherit; }
   margin: 0;
   padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 17rem), 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
   gap: 1px;
   background: var(--kante);
   border: 1px solid var(--kante);
@@ -747,7 +737,7 @@ a { color: inherit; }
   display: grid;
   gap: 0.4rem;
   padding: 1.5rem;
-  background: var(--leere-alt);
+  background: var(--grund-alt);
   transition: background .18s ease;
 }
 .branche:hover { background: var(--platte); }
@@ -755,23 +745,15 @@ a { color: inherit; }
 .branche__frage {
   font-family: var(--schrift-mono);
   font-size: 0.75rem;
-  font-stretch: 87.5%;
   line-height: 1.5;
-  color: var(--violett-weich);
+  color: var(--indigo-weich);
 }
 
-.branche__name {
-  font-size: 0.875rem;
-  color: var(--gedaempft);
-}
+.branche__name { font-size: 0.875rem; color: var(--gedaempft); }
 
 /* ── Fragen ─────────────────────────────────────────────────────────── */
 
-.fragen {
-  border-top: 1px solid var(--kante);
-  max-width: 62rem;
-}
-
+.fragen { border-top: 1px solid var(--kante); max-width: 62rem; }
 .frage { border-bottom: 1px solid var(--kante); }
 
 .frage__kopf {
@@ -779,40 +761,35 @@ a { color: inherit; }
   align-items: center;
   justify-content: space-between;
   gap: 1.5rem;
-  padding: 1.4rem 0;
+  padding: 1.45rem 0;
   cursor: pointer;
   list-style: none;
   font-family: var(--schrift-display);
   font-size: clamp(1rem, 1.5vw, 1.125rem);
   font-weight: 600;
-  font-stretch: 112%;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
   transition: color .16s ease;
 }
 .frage__kopf::-webkit-details-marker { display: none; }
-.frage__kopf:hover { color: var(--violett-weich); }
+.frage__kopf:hover { color: var(--indigo-weich); }
 
-/* Plus, das sich zum Minus dreht */
 .frage__kopf::after {
   content: '';
   flex: none;
   width: 13px;
   height: 13px;
   background:
-    linear-gradient(var(--violett-weich), var(--violett-weich)) center/13px 1.5px no-repeat,
-    linear-gradient(var(--violett-weich), var(--violett-weich)) center/1.5px 13px no-repeat;
+    linear-gradient(var(--indigo-weich), var(--indigo-weich)) center/13px 1.5px no-repeat,
+    linear-gradient(var(--indigo-weich), var(--indigo-weich)) center/1.5px 13px no-repeat;
   transition: transform .22s ease;
 }
 .frage[open] .frage__kopf::after {
   transform: rotate(90deg);
   background:
-    linear-gradient(var(--violett-weich), var(--violett-weich)) center/13px 1.5px no-repeat;
+    linear-gradient(var(--indigo-weich), var(--indigo-weich)) center/13px 1.5px no-repeat;
 }
 
-.frage__leib {
-  padding: 0 0 1.6rem;
-  max-width: 68ch;
-}
+.frage__leib { padding: 0 0 1.6rem; max-width: 68ch; }
 .frage__leib p {
   margin: 0;
   font-size: 0.9375rem;
@@ -822,7 +799,7 @@ a { color: inherit; }
 
 /* ── Kontakt ────────────────────────────────────────────────────────── */
 
-.abschnitt--kontakt { background: var(--leere-alt); }
+.abschnitt--kontakt { background: var(--grund-alt); }
 
 .kontakt {
   display: grid;
@@ -842,34 +819,30 @@ a { color: inherit; }
   font-size: 0.9375rem;
   color: var(--gedaempft);
 }
-.kontakt__punkte li {
-  position: relative;
-  padding-left: 1.4rem;
-}
+.kontakt__punkte li { position: relative; padding-left: 1.5rem; }
 .kontakt__punkte li::before {
   content: '';
   position: absolute;
   left: 0;
-  top: 0.55em;
-  width: 7px;
-  height: 7px;
-  background: var(--bernstein);
-  transform: rotate(45deg) scaleY(.58);
+  top: 0.5em;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--mint);
 }
 
 .kontakt__karte {
-  padding: 2rem;
+  padding: 2.1rem;
   border: 1px solid var(--kante-hell);
   border-radius: var(--rundung);
-  background: linear-gradient(165deg, var(--violett-tief), var(--platte) 62%);
+  background: linear-gradient(162deg, var(--indigo-tief), var(--platte) 64%);
 }
 
 .kontakt__label {
   margin: 0 0 0.35rem;
   font-family: var(--schrift-mono);
   font-size: 0.625rem;
-  font-stretch: 87.5%;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.11em;
   text-transform: uppercase;
   color: var(--leise);
 }
@@ -881,15 +854,14 @@ a { color: inherit; }
   font-family: var(--schrift-display);
   font-size: clamp(1.0625rem, 2vw, 1.375rem);
   font-weight: 700;
-  font-stretch: 112%;
-  letter-spacing: -0.015em;
+  letter-spacing: -0.025em;
   text-decoration: none;
   color: var(--papier);
   word-break: break-word;
   transition: color .16s ease;
 }
 .kontakt__mail:hover,
-.kontakt__tel:hover { color: var(--violett-weich); }
+.kontakt__tel:hover { color: var(--indigo-weich); }
 
 .kontakt__hinweis {
   margin: 0;
@@ -897,9 +869,8 @@ a { color: inherit; }
   border-top: 1px solid var(--kante);
   font-family: var(--schrift-mono);
   font-size: 0.625rem;
-  font-stretch: 87.5%;
-  letter-spacing: 0.06em;
-  color: var(--bernstein);
+  letter-spacing: 0.04em;
+  color: var(--pfirsich);
 }
 
 /* ── Rechtliche Seiten ──────────────────────────────────────────────── */
@@ -911,8 +882,7 @@ a { color: inherit; }
   font-family: var(--schrift-display);
   font-size: 1.0625rem;
   font-weight: 700;
-  font-stretch: 112%;
-  letter-spacing: -0.01em;
+  letter-spacing: -0.02em;
 }
 
 .recht__text {
@@ -921,19 +891,15 @@ a { color: inherit; }
   line-height: 1.7;
   color: var(--gedaempft);
 }
-.recht__text em {
-  color: var(--bernstein);
-  font-style: normal;
-}
+.recht__text em { color: var(--pfirsich); font-style: normal; }
 
 .warnung {
   margin: 2rem 0 1rem;
-  padding: 1.25rem 1.5rem;
-  border: 1px solid color-mix(in srgb, var(--bernstein) 40%, transparent);
-  border-left-width: 2px;
-  border-left-color: var(--bernstein);
-  border-radius: var(--rundung);
-  background: color-mix(in srgb, var(--bernstein) 7%, transparent);
+  padding: 1.35rem 1.6rem;
+  border: 1px solid color-mix(in srgb, var(--pfirsich) 38%, transparent);
+  border-left: 3px solid var(--pfirsich);
+  border-radius: var(--rundung-klein);
+  background: color-mix(in srgb, var(--pfirsich) 8%, transparent);
 }
 .warnung p {
   margin: 0;
@@ -941,14 +907,11 @@ a { color: inherit; }
   line-height: 1.65;
   color: var(--gedaempft);
 }
-.warnung strong { color: var(--bernstein); font-weight: 600; }
+.warnung strong { color: var(--pfirsich); font-weight: 600; }
 
 /* ── Fußzeile ───────────────────────────────────────────────────────── */
 
-.fuss {
-  padding-block: 2.5rem;
-  border-top: 1px solid var(--kante);
-}
+.fuss { padding-block: 2.5rem; border-top: 1px solid var(--kante); }
 
 .fuss__zeile {
   display: flex;
@@ -963,7 +926,7 @@ a { color: inherit; }
   margin: 0;
   font-family: var(--schrift-display);
   font-weight: 700;
-  font-stretch: 112%;
+  letter-spacing: -0.02em;
   color: var(--papier);
 }
 
@@ -976,12 +939,10 @@ a { color: inherit; }
 /* ── Auf schmalen Geräten ───────────────────────────────────────────── */
 
 @media (max-width: 60rem) {
-  /* Gestapelt zuerst die Aussage, dann das Bild — wer auf dem Telefon
-     landet, soll nicht an einem Diagramm vorbeiscrollen müssen. */
+  /* Gestapelt zuerst die Aussage, dann das Bild */
   .hero__raster { grid-template-columns: 1fr; }
 
-  /* Navigation bleibt erreichbar — sie scrollt seitlich, statt zu verschwinden.
-     Raster statt Flex, damit Marke und Knopf verlässlich in einer Zeile
+  /* Raster statt Flex, damit Marke und Knopf verlässlich in einer Zeile
      stehen und die Navigation darunter die volle Breite bekommt. */
   .kopf__zeile {
     display: grid;
@@ -991,13 +952,14 @@ a { color: inherit; }
     padding-block: 0.75rem;
     min-height: 0;
   }
-  .marke { margin-right: 0; min-width: 0; }
+  /* Plätze explizit setzen: die Navigation steht im Quelltext vor dem
+     Knopf und würde ihn sonst in eine dritte Zeile schieben. */
+  .marke { grid-column: 1; grid-row: 1; margin-right: 0; min-width: 0; }
   .marke__text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .knopf--klein { margin-left: 0; }
-  .nav { grid-column: 1 / -1; }
+  .knopf--klein { grid-column: 2; grid-row: 1; margin-left: 0; }
   .nav {
-    order: 3;
-    width: 100%;
+    grid-column: 1 / -1;
+    grid-row: 2;
     /* Ohne min-width: 0 verweigert das Flex-Element das Schrumpfen und
        overflow-x bliebe wirkungslos — die Seite würde seitlich scrollen. */
     min-width: 0;
@@ -1009,12 +971,11 @@ a { color: inherit; }
   }
   .nav::-webkit-scrollbar { display: none; }
   .nav a { white-space: nowrap; }
-  .knopf--klein { margin-left: auto; }
 }
 
 /* Unterhalb dieser Breite würden die beiden Karten die Maschine vollständig
-   verdecken. Statt sie zu verkleinern, bis sie unlesbar sind, läuft die
-   Erzählung hier von oben nach unten: Anfrage, Maschine, Antwort. */
+   verdecken. Statt sie unlesbar zu verkleinern, läuft die Erzählung hier
+   von oben nach unten: Anfrage, Maschine, Antwort. */
 @media (max-width: 34rem) {
   .maschine { display: grid; gap: 0.75rem; }
   .maschine__bild { order: 2; }
@@ -1032,7 +993,7 @@ a { color: inherit; }
   .marke__text { font-size: 0.8125rem; }
   .hero__aktionen .knopf { width: 100%; }
   .messwert__zahl { font-size: 2.5rem; }
-  .code__leib { font-size: 0.6875rem; padding-inline: 1rem; }
+  .code__leib { font-size: 0.6875rem; padding-inline: 1.1rem; }
 }
 
 /* ── Bewegung sparsam ───────────────────────────────────────────────── */
