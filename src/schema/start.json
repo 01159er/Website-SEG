@@ -1,0 +1,69 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "{{SITE}}/#organisation",
+      "name": "Scholz Growth Engine",
+      "url": "{{SITE}}/",
+      "description": "Technisches SEO, Google Business Profile und GEO für Unternehmen jeder Branche.",
+      "email": "kontakt@example.de",
+      "telephone": "+49 000 0000000"
+    },
+    {
+      "@type": "ProfessionalService",
+      "@id": "{{SITE}}/#betrieb",
+      "name": "Scholz Growth Engine",
+      "parentOrganization": { "@id": "{{SITE}}/#organisation" },
+      "url": "{{SITE}}/",
+      "priceRange": "$$",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Straße und Hausnummer",
+        "postalCode": "01067",
+        "addressLocality": "Dresden",
+        "addressCountry": "DE"
+      },
+      "areaServed": { "@type": "Country", "name": "Deutschland" },
+      "knowsLanguage": "de",
+      "hasOfferCatalog": {
+        "@type": "OfferCatalog",
+        "name": "Leistungen",
+        "itemListElement": [
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Technisches SEO-Audit und Umsetzung",
+              "description": "Prüfung und Behebung von Ladezeit, Core Web Vitals, Meta-Daten, strukturierten Daten und Indexierbarkeit."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "Google Business Profile Optimierung",
+              "description": "Kategorien, Leistungen, einheitliche Unternehmensangaben, Leistungsgebiete und Bewertungsablauf."
+            }
+          },
+          {
+            "@type": "Offer",
+            "itemOffered": {
+              "@type": "Service",
+              "name": "GEO-Basis",
+              "description": "FAQ-Schema sowie strukturierte Leistungs-, Produkt- und Referenzbeschreibungen, damit Antwortsysteme das Unternehmen als Quelle erkennen und nennen."
+            }
+          }
+        ]
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "{{SITE}}/#website",
+      "url": "{{SITE}}/",
+      "name": "Scholz Growth Engine",
+      "inLanguage": "de-DE",
+      "publisher": { "@id": "{{SITE}}/#organisation" }
+    }
+  ]
+}

@@ -1,9 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
-  <rect width="32" height="32" rx="8" fill="#13111F"/>
-  <!-- Drei gestapelte Platten — dasselbe Zeichen wie in der Kopfzeile -->
-  <g transform="skewX(-32) translate(9 0)">
-    <rect x="4"  y="7"  width="11" height="4" rx="1.5" fill="#7C6BF5"/>
-    <rect x="1"  y="13" width="14" height="4" rx="1.5" fill="#4A4180"/>
-    <rect x="-2" y="19" width="17" height="4" rx="1.5" fill="#332C5C"/>
-  </g>
+  <defs>
+    <linearGradient id="i" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%"   stop-color="#7C6BF5"/>
+      <stop offset="32%"  stop-color="#4FD1FF"/>
+      <stop offset="52%"  stop-color="#FAFAFC"/>
+      <stop offset="72%"  stop-color="#FFB27A"/>
+      <stop offset="100%" stop-color="#FF7AC8"/>
+    </linearGradient>
+    <radialGradient id="k" cx="34%" cy="26%">
+      <stop offset="0%"  stop-color="#fff" stop-opacity=".55"/>
+      <stop offset="44%" stop-color="#fff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="32" height="32" rx="8" fill="#060608"/>
+  <circle cx="16" cy="16" r="9" fill="url(#i)"/>
+  <circle cx="16" cy="16" r="9" fill="url(#k)"/>
 </svg>

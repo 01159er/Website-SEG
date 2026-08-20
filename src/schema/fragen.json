@@ -1,0 +1,40 @@
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "{{SITE}}/ergebnisse.html#fragen",
+  "inLanguage": "de-DE",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Können Sie garantieren, dass ChatGPT mein Unternehmen nennt?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nein, und niemand kann das. Welche Quellen ein Modell nennt, entscheidet der Anbieter nach Kriterien, die er nicht offenlegt und jederzeit ändern kann. Möglich ist, alle Voraussetzungen zu schaffen, damit ein System das Unternehmen eindeutig zuordnen kann, und monatlich nachzumessen, ob es genannt wird."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Woran merke ich, dass sich die Arbeit gelohnt hat?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Am ehesten an Anfragen von Menschen, die bereits wissen, was das Unternehmen macht. Messbar wird es über drei Flächen: Positionen in der Trefferliste, Sichtbarkeit im Google Business Profile und Nennungen in Antwortsystemen. Zusätzlich empfiehlt es sich, neue Kunden direkt zu fragen, wie sie auf das Unternehmen gekommen sind."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Was passiert, wenn ich nach drei Monaten aufhöre?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Die technischen Verbesserungen bleiben, weil sie in der eigenen Website stecken. Auszeichnungen, strukturierte Daten und ein gepflegtes Profil verschwinden nicht. Was nachlässt, ist die Pflege: Wettbewerber holen auf, Inhalte veralten, Bewertungen bleiben unbeantwortet. Der Vorsprung schrumpft langsam statt plötzlich."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Warum dauert es bei manchen Unternehmen länger?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Meist aus einem von drei Gründen: Der Suchbegriff ist bundesweit stark umkämpft, die Domain ist neu und hat noch keine Historie, oder die Seite hat technische Altlasten, die sich erst über Monate beheben lassen. Was zutrifft, steht im Audit vor der Beauftragung."
+      }
+    }
+  ]
+}

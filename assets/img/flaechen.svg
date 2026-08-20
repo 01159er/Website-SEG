@@ -1,0 +1,44 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 618 290"
+     role="img" aria-labelledby="t-flaechen" fill="none">
+  <title id="t-flaechen">Drei Flächen, auf denen Sichtbarkeit entsteht: Trefferliste, Kartenausschnitt und KI-Antwort</title>
+  <defs>
+    <linearGradient id="iris-flaechen" x1="0" y1="0" x2="-0.423" y2="0.906">
+      <stop offset="0%"   stop-color="#7C6BF5"/>
+      <stop offset="32%"  stop-color="#4FD1FF"/>
+      <stop offset="52%"  stop-color="#FAFAFC"/>
+      <stop offset="72%"  stop-color="#FFB27A"/>
+      <stop offset="100%" stop-color="#FF7AC8"/>
+    </linearGradient>
+    
+  </defs>
+  <rect x="0" y="30" width="190" height="236" rx="12" fill="#101016" stroke="#2C2C38" stroke-width="1"/>
+  <text x="20" y="58" font-family="'DM Mono', ui-monospace, monospace" font-size="9" font-weight="400" fill="#90909F" text-anchor="start" letter-spacing="1.4">KLASSISCHE SUCHE</text>
+  <text x="20" y="84" font-family="'Space Grotesk', system-ui, sans-serif" font-size="15" font-weight="700" fill="#FAFAFC" text-anchor="start">Trefferliste</text>
+  <rect x="20" y="112" width="150" height="8" rx="4.0" fill="#3A3A48" opacity="0.5"/>
+  <rect x="20" y="138" width="118" height="8" rx="4.0" fill="#3A3A48" opacity="0.5"/>
+  <rect x="20" y="164" width="132" height="8" rx="4.0" fill="url(#iris-flaechen)" opacity="1"/>
+  <rect x="20" y="190" width="96" height="8" rx="4.0" fill="#3A3A48" opacity="0.5"/>
+  <text x="20" y="240" font-family="'DM Mono', ui-monospace, monospace" font-size="10" font-weight="400" fill="#90909F" text-anchor="start" letter-spacing="0.8">monatlich gemessen</text>
+  <rect x="214" y="30" width="190" height="236" rx="12" fill="#101016" stroke="#2C2C38" stroke-width="1"/>
+  <text x="234" y="58" font-family="'DM Mono', ui-monospace, monospace" font-size="9" font-weight="400" fill="#90909F" text-anchor="start" letter-spacing="1.4">ORTSBEZOGENE SUCHE</text>
+  <text x="234" y="84" font-family="'Space Grotesk', system-ui, sans-serif" font-size="15" font-weight="700" fill="#FAFAFC" text-anchor="start">Kartenausschnitt</text>
+  <rect x="234" y="112" width="150" height="94" rx="8" fill="#1C1C26" stroke="#2C2C38"/>
+  <path d="M254 140 l0 -14" stroke="#3A3A48" stroke-width="1"/>
+  <circle cx="254" cy="122" r="4" fill="#3A3A48"/>
+  <path d="M309 128 l0 -14" stroke="#3A3A48" stroke-width="1"/>
+  <circle cx="309" cy="110" r="4" fill="#3A3A48"/>
+  <path d="M274 178 l0 -14" stroke="#3A3A48" stroke-width="1"/>
+  <circle cx="274" cy="160" r="4" fill="#3A3A48"/>
+  <path d="M332 166 l0 -18" stroke="#FFB27A" stroke-width="1.5"/>
+  <circle cx="332" cy="144" r="5.5" fill="url(#iris-flaechen)"/>
+  <text x="234" y="240" font-family="'DM Mono', ui-monospace, monospace" font-size="10" font-weight="400" fill="#90909F" text-anchor="start" letter-spacing="0.8">monatlich gemessen</text>
+  <rect x="428" y="30" width="190" height="236" rx="12" fill="#101016" stroke="#2C2C38" stroke-width="1"/>
+  <text x="448" y="58" font-family="'DM Mono', ui-monospace, monospace" font-size="9" font-weight="400" fill="#90909F" text-anchor="start" letter-spacing="1.4">ANTWORTSYSTEME</text>
+  <text x="448" y="84" font-family="'Space Grotesk', system-ui, sans-serif" font-size="15" font-weight="700" fill="#FAFAFC" text-anchor="start">KI-Antwort</text>
+  <rect x="448" y="112" width="150" height="8" rx="4.0" fill="#3A3A48" opacity="0.5"/>
+  <rect x="448" y="134" width="132" height="8" rx="4.0" fill="#3A3A48" opacity="0.5"/>
+  <rect x="448" y="156" width="104" height="8" rx="4.0" fill="#3A3A48" opacity="0.5"/>
+  <rect x="448" y="184" width="78" height="26" rx="13" fill="none" stroke="url(#iris-flaechen)" stroke-width="1.5"/>
+  <text x="487" y="202" font-family="'DM Mono', ui-monospace, monospace" font-size="11" font-weight="400" fill="#FAFAFC" text-anchor="middle">Sie</text>
+  <text x="448" y="240" font-family="'DM Mono', ui-monospace, monospace" font-size="10" font-weight="400" fill="#90909F" text-anchor="start" letter-spacing="0.8">monatlich gemessen</text>
+</svg>

@@ -1,0 +1,206 @@
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Core Web Vitals verständlich erklärt | Scholz Growth Engine</title>
+<meta name="description" content="LCP, CLS und INP verständlich erklärt: was jeder Wert misst, welche Grenzwerte gelten und wie Sie kostenlos selbst nachmessen.">
+<link rel="canonical" href="https://scholz-growth-engine.de/ratgeber/core-web-vitals.html">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<meta name="theme-color" content="#060608">
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="de_DE">
+<meta property="og:site_name" content="Scholz Growth Engine">
+<meta property="og:title" content="Core Web Vitals verständlich erklärt | Scholz Growth Engine">
+<meta property="og:description" content="LCP, CLS und INP verständlich erklärt: was jeder Wert misst, welche Grenzwerte gelten und wie Sie kostenlos selbst nachmessen.">
+<meta property="og:url" content="https://scholz-growth-engine.de/ratgeber/core-web-vitals.html">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="preload" href="../assets/fonts/space-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../assets/fonts/dm-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="../assets/css/fonts.css">
+<link rel="stylesheet" href="../assets/css/main.css">
+</head>
+<body data-seite="ratgeber">
+
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
+
+<header class="kopf">
+  <div class="bahn kopf__zeile">
+    <a class="marke" href="../index.html" aria-label="Scholz Growth Engine — Startseite">
+      <span class="marke__zeichen" aria-hidden="true"></span>
+      <span class="marke__text">Scholz&nbsp;Growth&nbsp;Engine</span>
+    </a>
+    <nav class="nav" aria-label="Hauptnavigation">
+      <a href="../leistungen.html" data-nav="leistungen">Leistungen</a>
+      <a href="../vorgehen.html" data-nav="vorgehen">Vorgehen</a>
+      <a href="../ergebnisse.html" data-nav="ergebnisse">Ergebnisse</a>
+      <a href="../ratgeber/index.html" data-nav="ratgeber">Ratgeber</a>
+      <a href="../ueber-uns.html" data-nav="ueber-uns">Über uns</a>
+    </nav>
+    <a class="knopf knopf--klein" href="../kontakt.html">Audit anfragen</a>
+  </div>
+</header>
+
+<main id="inhalt">
+<section class="teil">
+  <div class="bahn">
+    <p class="augenbraue">Technik · 10 Min. Lesezeit</p>
+    <h1 class="titel">Core Web Vitals: drei Werte, die über Ihre Ladezeit&nbsp;entscheiden</h1>
+
+    <div class="text">
+      <p>
+        „Die Seite ist zu langsam“ ist keine brauchbare Diagnose. Google hat das
+        Problem deshalb in drei Werte zerlegt, die jeweils etwas anderes messen.
+        Wer sie kennt, versteht sofort, woran es hakt — und erkennt, ob ein
+        Angebot am richtigen Ende ansetzt.
+      </p>
+
+      <h2>LCP — wann sieht der Besucher etwas Großes?</h2>
+      <p>
+        <strong>Largest Contentful Paint</strong> misst, wann das größte sichtbare
+        Element im ersten Bildschirmausschnitt fertig geladen ist. Meist ist das
+        ein Titelbild oder eine große Überschrift. Der Wert beantwortet die Frage:
+        Wie lange starrt jemand auf eine leere Fläche?
+      </p>
+      <p><strong>Grenzwert:</strong> gut bis 2,5 Sekunden, verbesserungsbedürftig bis 4 Sekunden.</p>
+      <p>Die häufigsten Ursachen für schlechte Werte:</p>
+      <ul>
+        <li>Ein unkomprimiertes Titelbild, oft mehrere Megabyte groß, direkt aus der Kamera hochgeladen</li>
+        <li>Schriften, die von einem fremden Server geladen werden und den Textaufbau blockieren</li>
+        <li>Ein langsamer Server, der schon vor dem ersten Byte Zeit verliert</li>
+        <li>Ein Rutsch aus Skripten im Kopf der Seite, der alles Weitere aufhält</li>
+      </ul>
+
+      <h2>CLS — springt der Inhalt beim Laden?</h2>
+      <p>
+        <strong>Cumulative Layout Shift</strong> misst, wie stark sich der Inhalt
+        während des Ladens noch verschiebt. Jeder kennt das: Man will auf einen
+        Link tippen, im selben Moment lädt darüber eine Anzeige, alles rutscht
+        nach unten, und man landet woanders.
+      </p>
+      <p><strong>Grenzwert:</strong> gut bis 0,1, verbesserungsbedürftig bis 0,25.</p>
+      <p>
+        Die Ursache ist fast immer dieselbe: Ein Element wird eingefügt, ohne dass
+        vorher Platz dafür reserviert war. Bilder ohne Angabe von Breite und Höhe
+        sind der Klassiker. Der Browser weiß erst beim Eintreffen des Bildes, wie
+        hoch es ist — und schiebt dann alles darunter weg.
+      </p>
+      <p>
+        Die Lösung ist billig: <code>width</code> und <code>height</code> an jedes
+        Bild schreiben oder ein <code>aspect-ratio</code> setzen. Dasselbe gilt
+        für nachgeladene Banner, Einbettungen und Hinweisleisten.
+      </p>
+
+      <h2>INP — reagiert die Seite, wenn man sie anfasst?</h2>
+      <p>
+        <strong>Interaction to Next Paint</strong> hat 2024 den älteren Wert FID
+        abgelöst und misst, wie lange es dauert, bis die Seite auf eine Eingabe
+        sichtbar reagiert — Tippen, Klicken, ein Menü öffnen. Gemessen wird über
+        den gesamten Besuch, nicht nur beim ersten Klick.
+      </p>
+      <p><strong>Grenzwert:</strong> gut bis 200 Millisekunden, verbesserungsbedürftig bis 500 Millisekunden.</p>
+      <p>
+        Schlechte Werte entstehen, wenn zu viel JavaScript gleichzeitig läuft.
+        Der Browser arbeitet an einem einzigen Strang: Solange dort ein Skript
+        rechnet, kann er auf nichts anderes reagieren. Typische Verursacher sind
+        Seitenbaukästen mit einem Dutzend Erweiterungen, mehrere Analysewerkzeuge
+        parallel und Karussells, die bei jedem Bildwechsel das Layout neu berechnen.
+      </p>
+
+      <h2>Labordaten und Felddaten — der wichtigste Unterschied</h2>
+      <p>
+        Hier liegt der häufigste Irrtum. Werkzeuge wie Lighthouse messen im
+        <strong>Labor</strong>: ein simuliertes Gerät, eine simulierte Verbindung,
+        ein Durchlauf. Das ist gut zum Aufspüren von Ursachen, sagt aber nichts
+        darüber, was Ihre echten Besucher erleben.
+      </p>
+      <p>
+        Für die Bewertung durch Google zählen die <strong>Felddaten</strong> — echte
+        Messwerte echter Besucher aus den vergangenen 28 Tagen, gesammelt im Chrome
+        User Experience Report. Deshalb ändert sich Ihr Wert nach einer Umstellung
+        nicht sofort, sondern erst, wenn genug neue Besuche eingeflossen sind.
+      </p>
+      <p>
+        Wenn jemand nach einer Optimierung am selben Tag „grüne Werte“ meldet,
+        zeigt er Labordaten. Das ist nicht falsch, aber es ist nicht das, was zählt.
+      </p>
+
+      <h2>Wie Sie selbst nachmessen</h2>
+      <ul>
+        <li><strong>PageSpeed Insights</strong> von Google zeigt beides nebeneinander: oben die Felddaten Ihrer echten Besucher, darunter den Labortest. Kostenlos, ohne Anmeldung.</li>
+        <li><strong>Search Console</strong> hat einen eigenen Bereich für Core Web Vitals, gruppiert nach Seitentypen. Zeigt, welche Vorlage das Problem verursacht — nicht nur welche Einzelseite.</li>
+        <li><strong>Entwicklerwerkzeuge im Browser</strong>, Reiter Lighthouse. Praktisch für schnelle Vorher-Nachher-Vergleiche während der Arbeit.</li>
+      </ul>
+      <p>
+        Messen Sie im Mobilmodus. Der Unterschied zum Desktop ist meist erheblich,
+        und die Mehrzahl Ihrer Besucher kommt vom Telefon.
+      </p>
+
+      <h2>Was Ladezeit wirklich bringt</h2>
+      <p>
+        Ehrlich bleiben: Core Web Vitals sind ein Rankingfaktor, aber ein
+        schwacher. Eine schnelle Seite mit schlechten Inhalten überholt keine
+        langsame Seite mit guten Inhalten.
+      </p>
+      <p>
+        Der Nutzen liegt woanders. Menschen brechen ab, wenn nichts passiert.
+        Eine Seite, die in einer Sekunde steht, verliert weniger Besucher als
+        eine, die vier Sekunden braucht — unabhängig von jedem Ranking. Und für
+        Antwortsysteme gilt: Was zu langsam lädt, wird beim Sammeln schlicht
+        übersprungen.
+      </p>
+      <p>
+        Deshalb steht Technik bei uns an erster Stelle. Nicht weil sie am meisten
+        bringt, sondern weil ohne sie alles andere ins Leere läuft.
+      </p>
+    </div>
+
+    <div class="hero__knoepfe" style="margin-top:3rem">
+      <a class="knopf" href="../kontakt.html">
+        Ladezeit prüfen lassen
+        <span class="knopf__pfeil" aria-hidden="true">→</span>
+      </a>
+      <a class="knopf knopf--geist" href="../ratgeber/index.html">Weitere Beiträge</a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="fuss">
+  <div class="bahn">
+    <div class="fuss__raster">
+      <div class="fuss__marke">
+        <span class="marke__zeichen marke__zeichen--gross" aria-hidden="true"></span>
+        <p class="fuss__satz">Sichtbar werden, wo Antworten entstehen.</p>
+      </div>
+      <nav class="fuss__spalte" aria-label="Leistungen">
+        <p class="fuss__kopf">Leistungen</p>
+        <a href="../leistungen.html">Technisches SEO</a>
+        <a href="../leistungen.html#profil">Business Profile</a>
+        <a href="../leistungen.html#geo">GEO-Basis</a>
+      </nav>
+      <nav class="fuss__spalte" aria-label="Unternehmen">
+        <p class="fuss__kopf">Unternehmen</p>
+        <a href="../vorgehen.html">Vorgehen</a>
+        <a href="../ergebnisse.html">Ergebnisse</a>
+        <a href="../ueber-uns.html">Über uns</a>
+        <a href="../kontakt.html">Kontakt</a>
+      </nav>
+      <nav class="fuss__spalte" aria-label="Rechtliches">
+        <p class="fuss__kopf">Rechtliches</p>
+        <a href="../impressum.html">Impressum</a>
+        <a href="../datenschutz.html">Datenschutz</a>
+      </nav>
+    </div>
+    <p class="fuss__note">
+      Diese Seite lädt nichts von Dritten, setzt keine Cookies und braucht deshalb kein Einwilligungsbanner.
+    </p>
+  </div>
+</footer>
+
+<script src="../assets/js/main.js" defer></script>
+
+</body>
+</html>

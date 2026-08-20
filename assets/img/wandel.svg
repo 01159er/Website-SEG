@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 722 360"
+     role="img" aria-labelledby="t-wandel" fill="none">
+  <title id="t-wandel">Vergleich: klassische Trefferliste gegenüber einer KI-Antwort, die drei Anbieter namentlich nennt</title>
+  <defs>
+    <linearGradient id="iris-wandel" x1="0" y1="0" x2="-0.423" y2="0.906">
+      <stop offset="0%"   stop-color="#7C6BF5"/>
+      <stop offset="32%"  stop-color="#4FD1FF"/>
+      <stop offset="52%"  stop-color="#FAFAFC"/>
+      <stop offset="72%"  stop-color="#FFB27A"/>
+      <stop offset="100%" stop-color="#FF7AC8"/>
+    </linearGradient>
+    
+  </defs>
+  <rect x="0" y="40" width="300" height="300" rx="14" fill="#101016" stroke="#2C2C38" stroke-width="1"/>
+  <text x="24" y="74" font-family="'DM Mono', ui-monospace, monospace" font-size="9" font-weight="400" fill="#90909F" text-anchor="start" letter-spacing="1.4">BISHER · TREFFERLISTE</text>
+  <rect x="24" y="96" width="214" height="9" rx="4.5" fill="#3A3A48" opacity="0.55"/>
+  <rect x="24" y="126" width="168" height="9" rx="4.5" fill="#3A3A48" opacity="0.55"/>
+  <rect x="24" y="156" width="190" height="9" rx="4.5" fill="#3A3A48" opacity="0.55"/>
+  <rect x="24" y="186" width="146" height="9" rx="4.5" fill="#FAFAFC" opacity="0.95"/>
+  <text x="180" y="194" font-family="'DM Mono', ui-monospace, monospace" font-size="9" font-weight="400" fill="#90909F" text-anchor="start" letter-spacing="1.2">Sie</text>
+  <rect x="24" y="216" width="202" height="9" rx="4.5" fill="#3A3A48" opacity="0.55"/>
+  <rect x="24" y="246" width="158" height="9" rx="4.5" fill="#3A3A48" opacity="0.55"/>
+  <rect x="24" y="276" width="178" height="9" rx="4.5" fill="#3A3A48" opacity="0.55"/>
+  <text x="24" y="322" font-family="'Space Grotesk', system-ui, sans-serif" font-size="11" font-weight="400" fill="#90909F" text-anchor="start">Platz 4 von 10 — sichtbar durch Scrollen</text>
+  <path d="M330 190 L392 190" stroke="#FAFAFC" stroke-width="1.5" opacity="0.55"/>
+  <path d="M384 184 L392 190 L384 196" stroke="#FAFAFC" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" opacity="0.55"/>
+  <text x="361" y="176" font-family="'DM Mono', ui-monospace, monospace" font-size="9" font-weight="400" fill="#90909F" text-anchor="middle" letter-spacing="1.4">heute</text>
+  <rect x="422" y="40" width="300" height="300" rx="14" fill="#16161E" stroke="#3A3A48" stroke-width="1"/>
+  <text x="446" y="74" font-family="'DM Mono', ui-monospace, monospace" font-size="9" font-weight="400" fill="#90909F" text-anchor="start" letter-spacing="1.4">HEUTE · KI-ANTWORT</text>
+  <rect x="446" y="96" width="246" height="9" rx="4.5" fill="#3A3A48" opacity="0.5"/>
+  <rect x="446" y="122" width="232" height="9" rx="4.5" fill="#3A3A48" opacity="0.5"/>
+  <rect x="446" y="148" width="158" height="9" rx="4.5" fill="#3A3A48" opacity="0.5"/>
+  <rect x="446" y="188" width="84" height="30" rx="15" fill="none" stroke="#3A3A48" stroke-width="1"/>
+  <text x="488.0" y="208" font-family="'DM Mono', ui-monospace, monospace" font-size="11" font-weight="400" fill="#90909F" text-anchor="middle">Anbieter A</text>
+  <rect x="540" y="188" width="84" height="30" rx="15" fill="none" stroke="#3A3A48" stroke-width="1"/>
+  <text x="582.0" y="208" font-family="'DM Mono', ui-monospace, monospace" font-size="11" font-weight="400" fill="#90909F" text-anchor="middle">Anbieter B</text>
+  <rect x="634" y="188" width="64" height="30" rx="15" fill="none" stroke="url(#iris-wandel)" stroke-width="1.5"/>
+  <text x="666.0" y="208" font-family="'DM Mono', ui-monospace, monospace" font-size="11" font-weight="400" fill="#FAFAFC" text-anchor="middle">Sie</text>
+  <rect x="446" y="244" width="222" height="9" rx="4.5" fill="#3A3A48" opacity="0.5"/>
+  <rect x="446" y="270" width="190" height="9" rx="4.5" fill="#3A3A48" opacity="0.5"/>
+  <text x="446" y="322" font-family="'Space Grotesk', system-ui, sans-serif" font-size="11" font-weight="400" fill="#ADADBC" text-anchor="start">Drei Namen — oder keiner</text>
+</svg>

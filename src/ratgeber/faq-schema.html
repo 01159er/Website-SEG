@@ -1,0 +1,140 @@
+title: FAQ-Schema richtig einsetzen | Scholz Growth Engine
+desc: Wie strukturierte Daten funktionieren, warum eine ausgezeichnete Frage mehr wert ist als drei Absätze Fließtext — und welche Fehler sie wirkungslos machen.
+nav: ratgeber
+path: ratgeber/faq-schema.html
+ogtype: article
+---
+<section class="teil">
+  <div class="bahn">
+    <p class="augenbraue">Praxis · 7 Min. Lesezeit</p>
+    <h1 class="titel">FAQ-Schema: die günstigste Art, zitierfähig zu&nbsp;werden</h1>
+
+    <div class="text">
+      <p>
+        Eine Maschine liest Ihre Website anders als ein Mensch. Wo Sie eine
+        Überschrift und einen Absatz sehen, sieht sie erst einmal nur Text. Ob
+        das eine Frage ist, ob der Absatz darunter die Antwort darstellt und ob
+        beides zusammengehört, muss sie erraten.
+      </p>
+      <p>
+        Strukturierte Daten nehmen ihr das Raten ab. Sie sind eine zweite,
+        unsichtbare Ebene im Quelltext, die sagt: Das hier ist eine Frage, das
+        ist die dazugehörige Antwort, und beides gehört zu diesem Unternehmen.
+      </p>
+
+      <h2>Wie das aussieht</h2>
+      <p>
+        Das gängige Format heißt JSON-LD und steht als kleiner Block im
+        Quelltext. Für den Besucher ist er unsichtbar, für Suchmaschinen und
+        Antwortsysteme ist er eindeutig:
+      </p>
+
+      <div class="code" style="margin:0 0 1.4rem">
+        <p class="code__kopf">
+          <span class="code__punkt" aria-hidden="true"></span>
+          JSON-LD im Quelltext
+        </p>
+        <pre class="code__leib"><code>{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [{
+    "@type": "Question",
+    "name": "Wie lange dauert eine Dachsanierung?",
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Für ein Satteldach mit rund 120 m²
+               dauert eine vollständige Sanierung
+               zwei bis drei Wochen, abhängig von
+               Witterung und Dämmvariante."
+    }
+  }]
+}</code></pre>
+      </div>
+
+      <p>
+        Genau dieser Block steckt auch auf unserer Seite mit den Ergebnissen.
+        Sie können ihn im Quelltext nachsehen — Rechtsklick, Seitenquelltext
+        anzeigen, ans Ende scrollen.
+      </p>
+
+      <h2>Warum das mehr wert ist als Fließtext</h2>
+      <p>
+        Ein Antwortsystem, das eine Frage beantworten soll, sucht nach etwas,
+        das bereits eine Antwort ist. Ein ausgezeichneter Frage-Antwort-Block ist
+        dafür das ideale Material: klar abgegrenzt, eindeutig zugeordnet, ohne
+        umliegendes Marketing.
+      </p>
+      <p>
+        Derselbe Inhalt, in einen Werbetext eingewoben, muss erst herausgelöst
+        werden — und dabei geht die Zuordnung oft verloren. Die Auszeichnung
+        kostet Sie nichts außer der Sorgfalt, sie richtig zu setzen.
+      </p>
+
+      <h2>Vier Fehler, die die Wirkung aufheben</h2>
+      <h3>1. Die Auszeichnung enthält etwas anderes als die Seite</h3>
+      <p>
+        Der häufigste und folgenreichste Fehler. Was im JSON-LD steht, muss für
+        den Besucher auf derselben Seite sichtbar sein. Weicht beides voneinander
+        ab, gilt das als Täuschung und kann dazu führen, dass Google die
+        strukturierten Daten der ganzen Domain ignoriert.
+      </p>
+      <h3>2. Antworten, die keine sind</h3>
+      <p>
+        „Was kostet das?“ — „Das hängt von vielen Faktoren ab. Sprechen Sie uns
+        an!“ Das ist keine Antwort, sondern eine Aufforderung. Zitierfähig wird
+        es erst mit einer Spanne, einem Beispiel oder einer Bedingung: „Zwischen
+        X und Y Euro, abhängig von der Größe. Bei unter 50 m² liegt der Preis
+        meist bei …“
+      </p>
+      <h3>3. Erfundene Fragen</h3>
+      <p>
+        Fragen, die sich niemand stellt, bringen nichts — auch dann nicht, wenn
+        sie das Wunschkeyword enthalten. Das Rohmaterial liegt in Ihrem Postfach
+        und in Ihren Telefonaten. Sammeln Sie zwei Wochen lang mit, was Kunden
+        tatsächlich fragen. Diese Liste ist wertvoller als jede
+        Keyword-Recherche.
+      </p>
+      <h3>4. Auf jede Seite dasselbe kopiert</h3>
+      <p>
+        Ein FAQ-Block gehört auf die Seite, zu der die Fragen passen. Derselbe
+        Block auf zwanzig Unterseiten wirkt wie eine Vorlage, nicht wie eine
+        Antwort — und wird entsprechend behandelt.
+      </p>
+
+      <h2>Was Sie noch auszeichnen sollten</h2>
+      <p>
+        FAQ ist der einfachste Einstieg, aber nicht der einzige lohnende Typ:
+      </p>
+      <ul>
+        <li><strong>LocalBusiness</strong> oder ein passender Untertyp: Adresse, Öffnungszeiten, Einzugsgebiet, Zahlungsarten</li>
+        <li><strong>Service</strong> beziehungsweise <strong>OfferCatalog</strong>: was Sie anbieten, in einer maschinenlesbaren Liste</li>
+        <li><strong>Product</strong> mit Preis und Verfügbarkeit, wenn Sie verkaufen</li>
+        <li><strong>BreadcrumbList</strong>: wo eine Seite in Ihrer Struktur steht</li>
+      </ul>
+
+      <h2>Selbst prüfen</h2>
+      <p>
+        Googles <strong>Test für Rich-Suchergebnisse</strong> und der
+        <strong>Schema Markup Validator</strong> von schema.org prüfen beide
+        kostenlos, ob Ihre Auszeichnung fehlerfrei ist. Adresse eintragen,
+        Ergebnis lesen. Wichtig: Beide prüfen die technische Gültigkeit, nicht,
+        ob Ihre Antworten inhaltlich etwas taugen. Das bleibt Ihre Aufgabe.
+      </p>
+      <p>
+        Eine Warnung zum Schluss: Seit 2023 zeigt Google FAQ-Erweiterungen in den
+        Suchergebnissen nur noch selten und für wenige Websites an. Wer FAQ-Schema
+        allein wegen der auffälligen Darstellung einsetzt, wird enttäuscht. Der
+        Wert liegt heute woanders — in der Maschinenlesbarkeit für Systeme, die
+        Ihre Antworten weiterverwenden.
+      </p>
+    </div>
+
+    <div class="hero__knoepfe" style="margin-top:3rem">
+      <a class="knopf" href="{{BASE}}kontakt.html">
+        Auszeichnung prüfen lassen
+        <span class="knopf__pfeil" aria-hidden="true">→</span>
+      </a>
+      <a class="knopf knopf--geist" href="{{BASE}}ratgeber/index.html">Weitere Beiträge</a>
+    </div>
+  </div>
+</section>

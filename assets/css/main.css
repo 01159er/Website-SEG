@@ -1,55 +1,63 @@
 /* ═══════════════════════════════════════════════════════════════════════
    Scholz Growth Engine
    ───────────────────────────────────────────────────────────────────────
-   Typografie (Auswahl nach ui-ux-pro-max, Paarung „Tech Startup“):
-   Space Grotesk stellt die Überschriften — geometrisch, flache Endungen,
-   ein eigenwilliges G. DM Sans trägt den Fließtext — rund, offen, warm.
-   Die Paarung stellt Präzision neben Zugänglichkeit, und genau das ist
-   das Angebot: technische Arbeit, verständlich erklärt.
+   Richtung: fast-schwarzer Grund, Typografie in Plakatgröße, ein einziges
+   irisierendes Objekt. Farbe ist hier ein Ereignis, kein Grundton — die
+   ganze Seite ist monochrom, damit die Chromkugel und die Kontaktpunkte
+   die einzigen Stellen sind, an denen Farbe auftritt.
 
-   Farbe: Der Grund ist kein Schwarz, sondern ein tiefes Indigo-Pflaume.
-   Indigo führt, Pfirsich markiert ausschließlich das Ergebnis, Mint
-   bestätigt. Drei Töne statt eines grellen Akzents auf Schwarz.
+   Schrift: Space Grotesk (Display), DM Sans (Text), DM Mono (Daten).
+
+   Bewegung: alles über transform und opacity, ein Easing für die ganze
+   Seite (expo.out), Eingang langsamer als Ausgang. prefers-reduced-motion
+   schaltet vollständig ab.
    ═══════════════════════════════════════════════════════════════════════ */
 
 :root {
-  /* Grund — tief, aber warm; nie reines Schwarz */
-  --grund:        #13111F;
-  --grund-alt:    #1A1730;
-  --platte:       #221E3C;
-  --platte-hoch:  #2A2549;
-
-  /* Kanten */
-  --kante:        #332C5C;
-  --kante-hell:   #4A4180;
-
-  /* Akzente. Der Grundton ist so gewählt, dass weiße Schrift darauf
-     4,5:1 erreicht — deshalb #6353E0 und nicht heller. */
-  --indigo:       #6353E0;
-  --indigo-hell:  #6E5CEC;   /* Hover, hält 4,77:1 mit Weiß */
-  --indigo-weich: #B4A9FF;   /* Text auf dunklem Grund */
-  --indigo-tief:  #362B78;   /* nur für Verläufe, nie für Schrift */
-  --indigo-ziffer:#6355BE;   /* Schrittnummern, 3,17:1 als Großtext */
-  --pfirsich:     #FFAD7A;
-  --mint:         #6FE0C4;
+  /* Grund — nie reines #000: OLED schmiert, und Schwarz auf Schwarz
+     nimmt der Chromkugel den Glanz. */
+  --grund:        #060608;
+  --grund-alt:    #0B0B10;
+  --platte:       #101016;
+  --platte-hoch:  #16161E;
+  --kante:        #22222C;
+  --kante-hell:   #383843;
 
   /* Schrift */
-  --papier:       #F6F4FD;
-  --gedaempft:    #BDB6D6;
-  --leise:        #9990BA;
+  --papier:       #FAFAFC;
+  --gedaempft:    #ADADBC;
+  --leise:        #90909F;
+
+  /* Iridenz — das einzige Farbereignis. Nie für Fließtext. */
+  --iris-1:       #7C6BF5;
+  --iris-2:       #4FD1FF;
+  --iris-3:       #FFB27A;
+  --iris-4:       #FF7AC8;
+  --iris: linear-gradient(115deg,
+          var(--iris-1), var(--iris-2) 32%,
+          var(--papier) 52%, var(--iris-3) 72%, var(--iris-4));
 
   --schrift-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
   --schrift-text:    'DM Sans', ui-sans-serif, system-ui, sans-serif;
   --schrift-mono:    'DM Mono', ui-monospace, 'SFMono-Regular', monospace;
 
-  --bahn: 76rem;
-  --luft: clamp(4.5rem, 9vw, 8.5rem);
-  --rand: clamp(1.25rem, 4vw, 2.5rem);
+  /* Ein Easing für die ganze Seite. */
+  --ease-aus:   cubic-bezier(.16, 1, .3, 1);
+  --ease-ein:   cubic-bezier(.7, 0, .84, 0);
+  --takt-mikro: 200ms;
+  --takt-mittel:420ms;
+  --takt-gross: 760ms;
 
-  /* Weichere Radien — der wichtigste Hebel gegen den strengen Eindruck */
-  --rundung:       16px;
-  --rundung-klein: 10px;
+  --breite: 78rem;
+  --luft:   clamp(4rem, 8vw, 7.5rem);
+  --rand:   clamp(1.25rem, 4vw, 3rem);
+  --radius: 14px;
+  --radius-klein: 9px;
 }
+
+/* Sanfter Übergang zwischen Seiten, wo der Browser es kann. Kostet nichts
+   und fällt sauber auf einen harten Wechsel zurück. */
+@view-transition { navigation: auto; }
 
 /* ── Grundlagen ─────────────────────────────────────────────────────── */
 
@@ -70,940 +78,702 @@ body {
   line-height: 1.65;
   font-synthesis: none;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
-img, svg { max-width: 100%; height: auto; display: block; }
-
+img, svg, canvas { max-width: 100%; display: block; }
+img, svg { height: auto; }
 a { color: inherit; }
 
 :focus-visible {
-  outline: 2px solid var(--indigo-weich);
+  outline: 2px solid var(--iris-2);
   outline-offset: 3px;
   border-radius: 3px;
 }
 
-::selection { background: var(--indigo); color: #fff; }
+::selection { background: var(--papier); color: var(--grund); }
 
 .skip {
-  position: absolute;
-  left: -9999px;
-  top: 0;
-  z-index: 100;
-  padding: 0.75rem 1.25rem;
-  background: var(--indigo);
-  color: #fff;
-  font-weight: 600;
-  text-decoration: none;
+  position: absolute; left: -9999px; top: 0; z-index: 200;
+  padding: .8rem 1.3rem;
+  background: var(--papier); color: var(--grund);
+  font-weight: 600; text-decoration: none;
 }
 .skip:focus { left: 0; }
 
-.wrap {
+.bahn {
   width: 100%;
-  max-width: var(--bahn);
+  max-width: var(--breite);
   margin-inline: auto;
   padding-inline: var(--rand);
 }
 
-/* ── Wiederkehrende Textrollen ──────────────────────────────────────── */
+/* ── Textrollen ─────────────────────────────────────────────────────── */
 
 .augenbraue {
-  margin: 0 0 1.5rem;
+  display: flex; align-items: center; gap: .7rem;
+  margin: 0 0 1.6rem;
   font-family: var(--schrift-mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.12em;
+  font-size: .6875rem;
+  letter-spacing: .14em;
   text-transform: uppercase;
-  color: var(--indigo-weich);
+  color: var(--leise);
 }
-.augenbraue--gedaempft { color: var(--leise); }
+.augenbraue::before {
+  content: ''; width: 26px; height: 1px; flex: none;
+  background: var(--iris);
+}
 
 .titel {
-  margin: 0 0 1.25rem;
+  margin: 0 0 1.4rem;
   font-family: var(--schrift-display);
-  font-size: clamp(1.85rem, 4.4vw, 3.3rem);
+  font-size: clamp(2rem, 5vw, 3.9rem);
   font-weight: 700;
-  line-height: 1.06;
-  letter-spacing: -0.03em;
+  line-height: 1.02;
+  letter-spacing: -.035em;
   text-wrap: balance;
-  /* Deutsche Komposita sprengen sonst schmale Viewports */
+  /* Deutsche Komposita sprengen sonst schmale Viewports. */
   hyphens: auto;
   overflow-wrap: break-word;
 }
+.titel--klein { font-size: clamp(1.6rem, 3.4vw, 2.5rem); }
 
 .blei {
   margin: 0 0 3.5rem;
-  font-size: clamp(1.0625rem, 1.35vw, 1.1875rem);
-  line-height: 1.62;
+  max-width: 60ch;
+  font-size: clamp(1.0625rem, 1.4vw, 1.25rem);
+  line-height: 1.6;
   color: var(--gedaempft);
   hyphens: auto;
 }
-.blei--breit { max-width: 58ch; }
+.blei--schmal { max-width: 48ch; }
 
-.hinweis {
-  margin: 3.5rem 0 0;
-  padding: 1.35rem 1.6rem;
+.merk {
+  margin: 3rem 0 0;
+  padding: 1.4rem 1.7rem;
   border: 1px solid var(--kante);
-  border-left: 3px solid var(--indigo);
-  border-radius: var(--rundung-klein);
+  border-radius: var(--radius-klein);
   background: var(--platte);
-  font-size: 0.9375rem;
+  font-size: .9375rem;
   color: var(--gedaempft);
-  max-width: 68ch;
+  max-width: 70ch;
+  position: relative;
+  overflow: hidden;
 }
-.hinweis strong { color: var(--papier); font-weight: 600; }
-.hinweis em { color: var(--indigo-weich); font-style: normal; }
+.merk::before {
+  content: ''; position: absolute; inset: 0 auto 0 0; width: 2px;
+  background: var(--iris);
+}
+.merk strong { color: var(--papier); font-weight: 600; }
 
-/* ── Knöpfe ─────────────────────────────────────────────────────────── */
+/* ── Knöpfe — Weiß auf Schwarz, wie in der Referenz ─────────────────── */
 
 .knopf {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  padding: 0.9rem 1.7rem;
-  background: var(--indigo);
-  color: #fff;
-  border: 1px solid var(--indigo);
-  border-radius: var(--rundung-klein);
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: .55rem;
+  min-height: 44px;                      /* Fingergröße */
+  padding: .85rem 1.7rem;
+  background: var(--papier);
+  color: var(--grund);
+  border: 1px solid var(--papier);
+  border-radius: 999px;
   font-family: var(--schrift-text);
-  font-size: 0.9375rem;
-  font-weight: 600;
-  letter-spacing: -0.005em;
-  text-decoration: none;
-  white-space: nowrap;
-  transition: background .18s ease, border-color .18s ease,
-              transform .18s ease, box-shadow .18s ease;
+  font-size: .9375rem; font-weight: 600;
+  letter-spacing: -.005em;
+  text-decoration: none; white-space: nowrap;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: transform var(--takt-mikro) var(--ease-aus),
+              background var(--takt-mikro) var(--ease-aus),
+              color var(--takt-mikro) var(--ease-aus);
 }
-.knopf:hover {
-  background: var(--indigo-hell);
-  border-color: var(--indigo-hell);
-  transform: translateY(-1px);
-  box-shadow: 0 8px 24px rgba(99, 83, 224, .34);
-}
-.knopf:active { transform: translateY(0); box-shadow: none; }
+.knopf:hover { transform: translateY(-2px); }
+.knopf:active { transform: translateY(0) scale(.985); }
 
-.knopf--leer {
+.knopf--geist {
   background: transparent;
   color: var(--papier);
   border-color: var(--kante-hell);
-  box-shadow: none;
 }
-.knopf--leer:hover {
-  background: var(--platte);
-  border-color: var(--indigo);
-  box-shadow: none;
-}
+.knopf--geist:hover { border-color: var(--papier); background: rgba(250,250,252,.06); }
 
-.knopf--klein { padding: 0.6rem 1.2rem; font-size: 0.875rem; }
-.knopf--voll  { width: 100%; margin-top: 1.75rem; }
+.knopf--klein { padding: .6rem 1.25rem; font-size: .875rem; }
+.knopf--voll  { width: 100%; }
+
+/* Pfeil, der beim Überfahren anläuft */
+.knopf__pfeil { transition: transform var(--takt-mittel) var(--ease-aus); }
+.knopf:hover .knopf__pfeil { transform: translateX(4px); }
 
 /* ── Kopfzeile ──────────────────────────────────────────────────────── */
 
 .kopf {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: color-mix(in srgb, var(--grund) 86%, transparent);
-  backdrop-filter: blur(14px);
+  position: sticky; top: 0; z-index: 100;
+  background: color-mix(in srgb, var(--grund) 82%, transparent);
+  backdrop-filter: blur(16px);
   border-bottom: 1px solid var(--kante);
 }
 
 .kopf__zeile {
-  display: flex;
-  align-items: center;
-  gap: 2rem;
+  display: flex; align-items: center; gap: 2rem;
   min-height: 4.5rem;
 }
 
 .marke {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.65rem;
+  display: inline-flex; align-items: center; gap: .7rem;
   text-decoration: none;
   font-family: var(--schrift-display);
-  font-weight: 700;
-  font-size: 0.9375rem;
-  letter-spacing: -0.02em;
+  font-weight: 700; font-size: .9375rem;
+  letter-spacing: -.025em;
   margin-right: auto;
 }
 
-/* Drei gestapelte Platten — dasselbe Zeichen wie die Maschine */
-.marke__glyphe {
-  display: grid;
-  gap: 2px;
-  width: 20px;
-  flex: none;
+/* Das Markenzeichen ist eine kleine Ausgabe der Chromkugel. */
+.marke__zeichen {
+  width: 18px; height: 18px; flex: none;
+  border-radius: 50%;
+  background: var(--iris);
+  background-size: 220% 220%;
+  box-shadow: inset 0 0 0 1px rgba(250,250,252,.28);
+  animation: iris-wandern 9s ease-in-out infinite;
 }
-.marke__glyphe span {
-  display: block;
-  height: 3px;
-  border-radius: 1px;
-  background: var(--kante-hell);
-  transform: skewX(-32deg);
-}
-.marke__glyphe span:nth-child(1) { width: 60%; background: var(--indigo); margin-left: 40%; }
-.marke__glyphe span:nth-child(2) { width: 80%; margin-left: 20%; }
-.marke__glyphe span:nth-child(3) { width: 100%; }
+.marke__zeichen--gross { width: 30px; height: 30px; }
 
-.nav {
-  display: flex;
-  gap: 1.75rem;
-  font-size: 0.875rem;
+@keyframes iris-wandern {
+  0%, 100% { background-position:   0% 50%; }
+  50%      { background-position: 100% 50%; }
 }
+
+.nav { display: flex; gap: 1.9rem; font-size: .875rem; }
 .nav a {
+  position: relative;
+  padding: .3rem 0;
   color: var(--gedaempft);
   text-decoration: none;
-  transition: color .16s ease;
+  transition: color var(--takt-mikro) var(--ease-aus);
 }
 .nav a:hover { color: var(--papier); }
+/* Unterstrich, der aus der Mitte wächst */
+.nav a::after {
+  content: ''; position: absolute; left: 0; right: 0; bottom: 0;
+  height: 1px; background: var(--iris);
+  transform: scaleX(0);
+  transition: transform var(--takt-mittel) var(--ease-aus);
+}
+.nav a:hover::after { transform: scaleX(1); }
+
+/* Aktive Seite */
+body[data-seite="leistungen"] .nav a[data-nav="leistungen"],
+body[data-seite="vorgehen"]   .nav a[data-nav="vorgehen"],
+body[data-seite="ergebnisse"] .nav a[data-nav="ergebnisse"],
+body[data-seite="ratgeber"]   .nav a[data-nav="ratgeber"],
+body[data-seite="ueber-uns"]  .nav a[data-nav="ueber-uns"] { color: var(--papier); }
+body[data-seite="leistungen"] .nav a[data-nav="leistungen"]::after,
+body[data-seite="vorgehen"]   .nav a[data-nav="vorgehen"]::after,
+body[data-seite="ergebnisse"] .nav a[data-nav="ergebnisse"]::after,
+body[data-seite="ratgeber"]   .nav a[data-nav="ratgeber"]::after,
+body[data-seite="ueber-uns"]  .nav a[data-nav="ueber-uns"]::after { transform: scaleX(1); }
+
+/* ── Abschnitte ─────────────────────────────────────────────────────── */
+
+.teil { padding-block: var(--luft); }
+.teil--alt { background: var(--grund-alt); }
+.teil--linie { border-top: 1px solid var(--kante); }
+
+.kopfzeile { max-width: 62ch; margin-bottom: clamp(3rem, 5vw, 4.5rem); }
+.kopfzeile .blei { margin-bottom: 0; }
+
+/* ── Die Chromkugel ─────────────────────────────────────────────────── */
+
+.chrom {
+  position: relative;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  isolation: isolate;
+}
+
+/* Grundzustand: reines CSS, rund 0 KB, läuft auf jedem Gerät flüssig,
+   weil nur eine Ebene rotiert und der Rest statisch bleibt. */
+.chrom__css {
+  position: absolute; inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(from 210deg,
+    var(--iris-1), var(--iris-2) 18%, var(--papier) 32%,
+    var(--iris-3) 50%, var(--iris-4) 68%, var(--iris-1) 88%, var(--iris-1));
+  filter: blur(11px) saturate(.95) brightness(.62);
+  will-change: transform;
+  animation: chrom-dreh 26s linear infinite;
+}
+
+/* Kugelform: Glanz oben links, Abdunkeln zum Rand. Liegt über dem
+   Verlauf und dreht sich nicht mit — dadurch wirkt das Licht fest
+   und die Oberfläche bewegt sich darunter. */
+.chrom::after {
+  content: ''; position: absolute; inset: 0; z-index: 3;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 34% 26%, rgba(255,255,255,.3), transparent 38%),
+    radial-gradient(circle at 50% 50%,
+      rgba(6,6,8,.93) 0%, rgba(6,6,8,.86) 42%, rgba(6,6,8,.42) 74%,
+      rgba(6,6,8,.22) 89%, rgba(6,6,8,.92) 100%);
+  pointer-events: none;
+}
+
+/* Weicher Schein nach außen */
+.chrom::before {
+  content: ''; position: absolute; inset: -18%;
+  border-radius: 50%; z-index: 0;
+  background: radial-gradient(circle, rgba(124,107,245,.2), transparent 62%);
+  pointer-events: none;
+}
+
+/* Aufwertung: WebGL-Fassung, wird nur auf leistungsfähigen Geräten
+   nachgeladen und blendet über die CSS-Fassung. */
+.chrom__gl {
+  position: absolute; inset: 0; z-index: 2;
+  width: 100%; height: 100%;
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity 900ms var(--ease-aus);
+}
+.chrom__gl.ist-da { opacity: 1; }
+
+@keyframes chrom-dreh { to { transform: rotate(360deg); } }
 
 /* ── Hero ───────────────────────────────────────────────────────────── */
 
 .hero {
   position: relative;
-  padding-block: clamp(3.5rem, 7vw, 6rem) clamp(4rem, 8vw, 7rem);
+  min-height: min(92svh, 60rem);
+  display: grid;
+  align-items: center;
+  padding-block: clamp(3rem, 8vw, 7rem);
   overflow: hidden;
 }
 
-/* Zwei Lichtscheine statt einem — der warme unten rechts holt die
-   Pfirsich-Seite ins Bild und nimmt der Fläche die Strenge. */
-.hero::before,
-.hero::after {
-  content: '';
+.hero__buehne {
   position: absolute;
+  top: 50%; left: 50%;
+  translate: -50% -50%;
+  width: min(66vw, 36rem);
+  z-index: 0;
   pointer-events: none;
-  aspect-ratio: 1;
-  border-radius: 50%;
-}
-.hero::before {
-  top: 6%;
-  right: -8%;
-  width: min(66vw, 720px);
-  background: radial-gradient(circle, rgba(124,107,245,.26), transparent 68%);
-}
-.hero::after {
-  bottom: -14%;
-  right: 14%;
-  width: min(44vw, 460px);
-  background: radial-gradient(circle, rgba(255,173,122,.11), transparent 70%);
 }
 
-.hero__raster {
-  position: relative;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1.02fr);
-  gap: clamp(2.5rem, 5vw, 4.5rem);
-  align-items: center;
-}
+.hero__inhalt { position: relative; z-index: 1; }
 
 .hero__titel {
-  margin: 0 0 1.75rem;
+  margin: 0 0 1.8rem;
   font-family: var(--schrift-display);
-  font-size: clamp(2.15rem, 5.4vw, 4.25rem);
+  font-size: clamp(2.9rem, 11vw, 9.5rem);
   font-weight: 700;
-  line-height: 1.02;
-  letter-spacing: -0.04em;
-  hyphens: auto;
+  line-height: .9;
+  letter-spacing: -.05em;
+  text-transform: none;
+  hyphens: manual;
   overflow-wrap: break-word;
 }
-.hero__titel em { font-style: normal; color: var(--indigo-weich); }
-.hero__titel-zwei {
-  display: block;
-  margin-top: 0.6rem;
-  font-size: 0.5em;
-  font-weight: 500;
-  line-height: 1.16;
-  letter-spacing: -0.02em;
-  color: var(--gedaempft);
+.hero__titel .punkt { color: transparent; background: var(--iris); background-clip: text; -webkit-background-clip: text; }
+
+/* Zeilenweiser Aufbau: jede Zeile sitzt in einem Fenster und fährt
+   von unten herein. Ohne JavaScript sind alle Zeilen sofort sichtbar. */
+.zeile { display: block; overflow: hidden; }
+.zeile > span { display: block; }
+.js-motion .zeile > span { transform: translateY(105%); }
+.js-motion .zeile.ist-da > span {
+  transform: translateY(0);
+  transition: transform var(--takt-gross) var(--ease-aus);
 }
 
 .hero__blei {
-  margin: 0 0 2.25rem;
-  max-width: 48ch;
-  font-size: clamp(1.0625rem, 1.3vw, 1.1875rem);
-  color: var(--gedaempft);
-  hyphens: auto;
-}
-
-.hero__aktionen { display: flex; flex-wrap: wrap; gap: 0.875rem; }
-
-.hero__fussnote {
-  margin: 1.5rem 0 0;
-  font-family: var(--schrift-mono);
-  font-size: 0.6875rem;
-  letter-spacing: 0.04em;
-  color: var(--leise);
-}
-
-/* ── Die Maschine ───────────────────────────────────────────────────── */
-
-.maschine { position: relative; width: 100%; }
-.maschine__bild { width: 100%; height: auto; }
-
-.chip {
-  position: absolute;
-  margin: 0;
-  padding: 0.8rem 1rem;
-  width: min(46%, 15.5rem);
-  background: color-mix(in srgb, var(--platte-hoch) 93%, transparent);
-  backdrop-filter: blur(8px);
-  border: 1px solid var(--kante-hell);
-  border-radius: var(--rundung-klein);
-  box-shadow: 0 14px 36px rgba(8, 6, 20, .5);
-}
-
-.chip__kopf {
-  font-family: var(--schrift-mono);
-  font-size: 0.5625rem;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
-  color: var(--leise);
-  margin-bottom: 0.35rem;
-}
-
-.chip__leib {
-  margin: 0;
-  font-size: 0.8125rem;
-  line-height: 1.45;
-  color: var(--papier);
-}
-
-.chip--frage { top: 2%; left: 0; border-color: var(--indigo); }
-.chip--frage .chip__leib { font-family: var(--schrift-mono); font-size: 0.75rem; }
-
-.chip--antwort {
-  bottom: 12%;
-  right: 0;
-  border-color: color-mix(in srgb, var(--pfirsich) 55%, transparent);
-}
-.chip--antwort mark {
-  background: none;
-  color: var(--pfirsich);
-  font-weight: 600;
-}
-
-.chip__quelle {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  margin: 0.55rem 0 0;
-  padding-top: 0.55rem;
-  border-top: 1px solid var(--kante);
-  font-family: var(--schrift-mono);
-  font-size: 0.5625rem;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  color: var(--pfirsich);
-}
-.chip__quelle::before {
-  content: '';
-  width: 5px;
-  height: 5px;
-  flex: none;
-  border-radius: 50%;
-  background: var(--pfirsich);
-}
-
-/* Beide Karten stehen dauerhaft — die Aussage muss auch im Standbild
-   lesbar sein. Bewegt wird nur der Punkt, im Takt der Laufpunkte (3,6 s). */
-@media (prefers-reduced-motion: no-preference) {
-  .chip__quelle::before { animation: quelle-puls 3.6s ease-in-out infinite; }
-  @keyframes quelle-puls {
-    0%, 48%   { opacity: .25; transform: scale(1); }
-    62%, 78%  { opacity: 1;   transform: scale(1.35); }
-    92%, 100% { opacity: .25; transform: scale(1); }
-  }
-}
-
-/* ── Abschnitte ─────────────────────────────────────────────────────── */
-
-.abschnitt {
-  padding-block: var(--luft);
-  border-top: 1px solid var(--kante);
-}
-.abschnitt--alt { background: var(--grund-alt); }
-
-/* ── Gegenüberstellung ──────────────────────────────────────────────── */
-
-.gegenueber {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 21rem), 1fr));
-  gap: 1.5rem;
-}
-
-.gegenueber__seite {
-  padding: 1.9rem;
-  border: 1px solid var(--kante);
-  border-radius: var(--rundung);
-  background: var(--platte);
-}
-.gegenueber__seite--neu {
-  border-color: var(--kante-hell);
-  background: linear-gradient(158deg, var(--indigo-tief), var(--platte) 64%);
-}
-
-.gegenueber__titel {
-  margin: 0 0 1.5rem;
-  font-family: var(--schrift-display);
-  font-size: 1.375rem;
-  font-weight: 700;
-  letter-spacing: -0.025em;
-}
-
-.gegenueber__text {
-  margin: 1.5rem 0 0;
-  font-size: 0.9375rem;
+  max-width: 46ch;
+  margin: 0 0 2.4rem;
+  font-size: clamp(1.0625rem, 1.4vw, 1.25rem);
   color: var(--gedaempft);
 }
 
-.serp { list-style: none; margin: 0; padding: 0; display: grid; gap: 0.6rem; }
-.serp__zeile { display: flex; align-items: center; gap: 0.75rem; }
-.serp__balken { height: 8px; flex: 1; background: var(--kante); border-radius: 4px; }
-.serp__zeile:nth-child(2) .serp__balken { max-width: 78%; }
-.serp__zeile:nth-child(4) .serp__balken { max-width: 66%; }
-.serp__zeile:nth-child(5) .serp__balken { max-width: 84%; }
-.serp__zeile:nth-child(6) .serp__balken { max-width: 58%; }
-.serp__zeile--du .serp__balken { background: var(--kante-hell); max-width: 72%; }
-.serp__ihr {
+.hero__knoepfe { display: flex; flex-wrap: wrap; gap: .9rem; }
+
+.hero__fuss {
+  margin: 2.6rem 0 0;
   font-family: var(--schrift-mono);
-  font-size: 0.625rem;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
+  font-size: .6875rem;
+  letter-spacing: .06em;
   color: var(--leise);
-  white-space: nowrap;
 }
 
-.antwortblock { display: grid; gap: 0.6rem; }
-.antwortblock__zeile {
-  height: 8px;
-  margin: 0;
-  background: var(--kante-hell);
-  border-radius: 4px;
-  opacity: .75;
-}
-.antwortblock__zeile--kurz { width: 62%; }
-.antwortblock__namen {
-  list-style: none;
-  margin: 0.9rem 0 0;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-}
-.antwortblock__namen li {
-  padding: 0.32rem 0.7rem;
-  border: 1px solid color-mix(in srgb, var(--pfirsich) 45%, transparent);
-  border-radius: 999px;
-  font-family: var(--schrift-mono);
-  font-size: 0.625rem;
-  color: var(--pfirsich);
-}
+/* ── Karten ─────────────────────────────────────────────────────────── */
 
-/* ── Leistungen ─────────────────────────────────────────────────────── */
-
-.ebenen {
+.raster {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
-  gap: 1.5rem;
+  gap: 1.4rem;
 }
+.raster--zwei { grid-template-columns: repeat(auto-fit, minmax(min(100%, 25rem), 1fr)); }
+.raster--vier { grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); }
 
-.ebene {
+.karte {
   position: relative;
-  padding: 2.1rem 1.9rem;
+  padding: 2rem 1.9rem;
   border: 1px solid var(--kante);
-  border-radius: var(--rundung);
+  border-radius: var(--radius);
   background: var(--platte);
-  transition: border-color .2s ease, transform .2s ease;
+  overflow: hidden;
+  transition: border-color var(--takt-mittel) var(--ease-aus),
+              transform var(--takt-mittel) var(--ease-aus);
 }
-.ebene:hover { border-color: var(--kante-hell); transform: translateY(-3px); }
+.karte:hover { border-color: var(--kante-hell); transform: translateY(-3px); }
 
-.ebene--betont {
-  border-color: var(--kante-hell);
-  background: linear-gradient(162deg, var(--indigo-tief), var(--platte) 60%);
+/* Irisierende Oberkante, die beim Überfahren einläuft */
+.karte::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: var(--iris);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform var(--takt-gross) var(--ease-aus);
 }
-.ebene--betont:hover { border-color: var(--indigo); }
+.karte:hover::before { transform: scaleX(1); }
 
-.ebene__nr {
+.karte__nr {
   margin: 0 0 1rem;
   font-family: var(--schrift-mono);
-  font-size: 0.625rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--indigo-weich);
+  font-size: .625rem; letter-spacing: .14em; text-transform: uppercase;
+  color: var(--leise);
 }
-
-.ebene__titel {
-  margin: 0 0 0.9rem;
+.karte__titel {
+  margin: 0 0 .85rem;
   font-family: var(--schrift-display);
-  font-size: 1.25rem;
-  font-weight: 700;
-  line-height: 1.24;
-  letter-spacing: -0.025em;
+  font-size: 1.25rem; font-weight: 700;
+  line-height: 1.22; letter-spacing: -.025em;
   hyphens: auto;
 }
-
-.ebene__text {
-  margin: 0 0 1.5rem;
-  font-size: 0.9375rem;
-  color: var(--gedaempft);
-  hyphens: auto;
-}
+.karte__text { margin: 0; font-size: .9375rem; color: var(--gedaempft); hyphens: auto; }
+.karte__text + .liste { margin-top: 1.4rem; }
 
 .liste {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 0.65rem;
-  font-size: 0.875rem;
-  color: var(--gedaempft);
+  list-style: none; margin: 0; padding: 0;
+  display: grid; gap: .65rem;
+  font-size: .875rem; color: var(--gedaempft);
 }
 .liste li { position: relative; padding-left: 1.5rem; hyphens: auto; }
-/* Kleine isometrische Raute — Sprache der Maschine */
 .liste li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0.55em;
-  width: 7px;
-  height: 7px;
-  border-radius: 1px;
-  background: var(--indigo);
-  transform: rotate(45deg) scaleY(.58);
+  content: ''; position: absolute; left: 0; top: .58em;
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--iris);
 }
 
-/* ── Ablauf ─────────────────────────────────────────────────────────── */
+/* ── Zahlenreihe ────────────────────────────────────────────────────── */
 
-.schritte {
-  list-style: none;
+.zahl { display: grid; gap: .4rem; }
+.zahl__wert {
   margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
-  gap: 1.25rem;
-}
-
-.schritt {
-  position: relative;
-  padding: 1.9rem 1.6rem;
-  border: 1px solid var(--kante);
-  border-radius: var(--rundung);
-  background: var(--grund);
-}
-
-.schritt__nr {
-  margin: 0 0 1rem;
   font-family: var(--schrift-display);
-  font-size: 2.25rem;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.05em;
-  color: var(--indigo-ziffer);
+  font-size: clamp(2.4rem, 4.4vw, 3.4rem);
+  font-weight: 700; line-height: 1; letter-spacing: -.05em;
 }
-
-.schritt__titel {
-  margin: 0 0 0.7rem;
-  font-family: var(--schrift-display);
-  font-size: 1.0625rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-
-.schritt__text {
-  margin: 0 0 1.25rem;
-  font-size: 0.875rem;
-  color: var(--gedaempft);
-  hyphens: auto;
-}
-
-.schritt__dauer {
+.zahl__label {
   margin: 0;
   font-family: var(--schrift-mono);
-  font-size: 0.625rem;
-  letter-spacing: 0.09em;
-  text-transform: uppercase;
-  color: var(--leise);
-}
-
-/* ── Beweis ─────────────────────────────────────────────────────────── */
-
-.messwerte {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
-  gap: 1.25rem;
-  margin-bottom: 3rem;
-}
-
-.messwert {
-  padding: 1.6rem;
-  border: 1px solid var(--kante);
-  border-radius: var(--rundung);
-  background: var(--platte);
-}
-
-.messwert__zahl {
-  margin: 0 0 0.35rem;
-  font-family: var(--schrift-display);
-  font-size: 3rem;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: -0.05em;
-  color: var(--indigo-weich);
-}
-
-.messwert__label {
-  margin: 0 0 0.6rem;
-  font-family: var(--schrift-mono);
-  font-size: 0.625rem;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
+  font-size: .625rem; letter-spacing: .13em; text-transform: uppercase;
   color: var(--papier);
 }
+.zahl__text { margin: .3rem 0 0; font-size: .8125rem; line-height: 1.55; color: var(--leise); }
 
-.messwert__text {
+/* ── Schritte ───────────────────────────────────────────────────────── */
+
+.schritte { list-style: none; margin: 0; padding: 0; display: grid; gap: 1px;
+  background: var(--kante); border: 1px solid var(--kante);
+  border-radius: var(--radius); overflow: hidden; }
+
+.schritt {
+  display: grid;
+  grid-template-columns: 5rem 1fr;
+  gap: 1.5rem 2rem;
+  padding: 2.1rem 1.9rem;
+  background: var(--grund);
+  transition: background var(--takt-mittel) var(--ease-aus);
+}
+.schritt:hover { background: var(--platte); }
+
+.schritt__nr {
   margin: 0;
-  font-size: 0.8125rem;
-  line-height: 1.55;
-  color: var(--leise);
-  hyphens: auto;
+  font-family: var(--schrift-display);
+  font-size: 2.6rem; font-weight: 700; line-height: .9; letter-spacing: -.06em;
+  color: transparent;
+  background: var(--iris); background-clip: text; -webkit-background-clip: text;
+}
+.schritt__titel {
+  margin: 0 0 .6rem;
+  font-family: var(--schrift-display);
+  font-size: 1.2rem; font-weight: 700; letter-spacing: -.025em;
+}
+.schritt__text { margin: 0 0 1rem; font-size: .9375rem; color: var(--gedaempft); max-width: 62ch; }
+.schritt__dauer {
+  margin: 0; font-family: var(--schrift-mono);
+  font-size: .625rem; letter-spacing: .11em; text-transform: uppercase; color: var(--leise);
 }
 
-.code {
+/* ── Grafiken ───────────────────────────────────────────────────────── */
+
+.figur { margin: 0; }
+.figur__bild {
+  width: 100%;
   border: 1px solid var(--kante);
-  border-radius: var(--rundung);
+  border-radius: var(--radius);
   background: var(--grund-alt);
-  overflow: hidden;
+  padding: clamp(1.2rem, 3vw, 2.6rem);
 }
-
-.code__kopf {
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  margin: 0;
-  padding: 0.9rem 1.4rem;
-  border-bottom: 1px solid var(--kante);
+/* Die Diagramme sind für rund 600 bis 720 Pixel Breite gezeichnet. Ohne
+   Deckel würden sie auf einen 1150 Pixel breiten Container hochskaliert
+   und wirkten dünn und leer. */
+.figur__bild svg {
+  width: 100%;
+  max-width: 46rem;
+  height: auto;
+  margin-inline: auto;
+}
+.figur__text {
+  margin: .9rem 0 0;
   font-family: var(--schrift-mono);
-  font-size: 0.625rem;
-  letter-spacing: 0.07em;
-  text-transform: uppercase;
+  font-size: .6875rem; line-height: 1.6; letter-spacing: .02em;
   color: var(--leise);
 }
-.code__punkt {
-  width: 7px;
-  height: 7px;
-  flex: none;
-  border-radius: 50%;
-  background: var(--mint);
-}
 
+/* ── Codeblock ──────────────────────────────────────────────────────── */
+
+.code { border: 1px solid var(--kante); border-radius: var(--radius);
+  background: var(--grund-alt); overflow: hidden; }
+.code__kopf {
+  display: flex; align-items: center; gap: .6rem; margin: 0;
+  padding: .9rem 1.4rem; border-bottom: 1px solid var(--kante);
+  font-family: var(--schrift-mono); font-size: .625rem;
+  letter-spacing: .09em; text-transform: uppercase; color: var(--leise);
+}
+.code__punkt { width: 7px; height: 7px; flex: none; border-radius: 50%; background: var(--iris); }
 .code__leib {
-  margin: 0;
-  min-width: 0;
-  padding: 1.5rem 1.4rem;
-  overflow-x: auto;
-  font-family: var(--schrift-mono);
-  font-size: 0.75rem;
-  line-height: 1.8;
-  color: var(--indigo-weich);
-  tab-size: 2;
+  margin: 0; min-width: 0; padding: 1.5rem 1.4rem; overflow-x: auto;
+  font-family: var(--schrift-mono); font-size: .75rem; line-height: 1.8;
+  color: var(--gedaempft); tab-size: 2;
 }
 /* Der Browser-Standard setzt für <code> eine eigene Schrift und schlägt
    die Vererbung vom <pre> — ohne das hier läuft der Block nicht in DM Mono. */
 .code__leib code { font: inherit; color: inherit; }
 
-.code__fuss {
-  margin: 0;
-  padding: 0.9rem 1.4rem;
-  border-top: 1px solid var(--kante);
-  font-size: 0.8125rem;
-  color: var(--leise);
-}
-
-/* ── Für wen ────────────────────────────────────────────────────────── */
-
-.branchen {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
-  gap: 1px;
-  background: var(--kante);
-  border: 1px solid var(--kante);
-  border-radius: var(--rundung);
-  overflow: hidden;
-}
-
-.branche {
-  display: grid;
-  gap: 0.4rem;
-  padding: 1.5rem;
-  background: var(--grund-alt);
-  transition: background .18s ease;
-}
-.branche:hover { background: var(--platte); }
-
-.branche__frage {
-  font-family: var(--schrift-mono);
-  font-size: 0.75rem;
-  line-height: 1.5;
-  color: var(--indigo-weich);
-}
-
-.branche__name { font-size: 0.875rem; color: var(--gedaempft); }
-
 /* ── Fragen ─────────────────────────────────────────────────────────── */
 
-.fragen { border-top: 1px solid var(--kante); max-width: 62rem; }
+.fragen { border-top: 1px solid var(--kante); max-width: 64rem; }
 .frage { border-bottom: 1px solid var(--kante); }
-
 .frage__kopf {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 1.5rem;
-  padding: 1.45rem 0;
-  cursor: pointer;
-  list-style: none;
+  display: flex; align-items: center; justify-content: space-between; gap: 1.5rem;
+  min-height: 44px; padding: 1.5rem 0;
+  cursor: pointer; list-style: none;
   font-family: var(--schrift-display);
-  font-size: clamp(1rem, 1.5vw, 1.125rem);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  transition: color .16s ease;
+  font-size: clamp(1rem, 1.5vw, 1.15rem); font-weight: 600; letter-spacing: -.025em;
+  transition: color var(--takt-mikro) var(--ease-aus);
 }
 .frage__kopf::-webkit-details-marker { display: none; }
-.frage__kopf:hover { color: var(--indigo-weich); }
-
+.frage__kopf:hover { color: var(--gedaempft); }
 .frage__kopf::after {
-  content: '';
-  flex: none;
-  width: 13px;
-  height: 13px;
+  content: ''; flex: none; width: 13px; height: 13px;
   background:
-    linear-gradient(var(--indigo-weich), var(--indigo-weich)) center/13px 1.5px no-repeat,
-    linear-gradient(var(--indigo-weich), var(--indigo-weich)) center/1.5px 13px no-repeat;
-  transition: transform .22s ease;
+    linear-gradient(var(--papier), var(--papier)) center/13px 1.5px no-repeat,
+    linear-gradient(var(--papier), var(--papier)) center/1.5px 13px no-repeat;
+  transition: transform var(--takt-mittel) var(--ease-aus);
 }
 .frage[open] .frage__kopf::after {
   transform: rotate(90deg);
-  background:
-    linear-gradient(var(--indigo-weich), var(--indigo-weich)) center/13px 1.5px no-repeat;
+  background: linear-gradient(var(--papier), var(--papier)) center/13px 1.5px no-repeat;
 }
+.frage__leib { padding: 0 0 1.7rem; max-width: 68ch; }
+.frage__leib p { margin: 0 0 1rem; font-size: .9375rem; color: var(--gedaempft); hyphens: auto; }
+.frage__leib p:last-child { margin-bottom: 0; }
 
-.frage__leib { padding: 0 0 1.6rem; max-width: 68ch; }
-.frage__leib p {
-  margin: 0;
-  font-size: 0.9375rem;
-  color: var(--gedaempft);
-  hyphens: auto;
+/* ── Ratgeber ───────────────────────────────────────────────────────── */
+
+.beitrag {
+  display: grid; gap: .9rem;
+  padding: 2rem 0;
+  border-top: 1px solid var(--kante);
+  text-decoration: none;
+  transition: opacity var(--takt-mittel) var(--ease-aus);
 }
+.beitrag:hover { opacity: .72; }
+.beitrag__meta {
+  margin: 0; font-family: var(--schrift-mono);
+  font-size: .625rem; letter-spacing: .13em; text-transform: uppercase; color: var(--leise);
+}
+.beitrag__titel {
+  margin: 0; font-family: var(--schrift-display);
+  font-size: clamp(1.3rem, 2.6vw, 1.9rem); font-weight: 700;
+  line-height: 1.16; letter-spacing: -.03em; hyphens: auto;
+}
+.beitrag__text { margin: 0; max-width: 68ch; font-size: .9375rem; color: var(--gedaempft); }
+
+/* Fließtext eines Ratgeberbeitrags */
+.text { max-width: 68ch; }
+.text h2 {
+  margin: 3.2rem 0 1rem;
+  font-family: var(--schrift-display);
+  font-size: clamp(1.4rem, 2.6vw, 1.8rem); font-weight: 700;
+  letter-spacing: -.03em; line-height: 1.2; hyphens: auto;
+}
+.text h3 {
+  margin: 2.2rem 0 .7rem;
+  font-family: var(--schrift-display);
+  font-size: 1.0625rem; font-weight: 700; letter-spacing: -.02em;
+}
+.text p { margin: 0 0 1.2rem; color: var(--gedaempft); hyphens: auto; }
+.text ul, .text ol { margin: 0 0 1.4rem; padding-left: 1.3rem; color: var(--gedaempft); }
+.text li { margin-bottom: .5rem; hyphens: auto; }
+.text strong { color: var(--papier); font-weight: 600; }
+.text a { color: var(--papier); text-decoration: underline; text-underline-offset: 3px; }
 
 /* ── Kontakt ────────────────────────────────────────────────────────── */
 
-.abschnitt--kontakt { background: var(--grund-alt); }
+.kontakt { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 21rem), 1fr));
+  gap: clamp(2rem, 4vw, 4rem); align-items: start; }
 
-.kontakt {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr));
-  gap: clamp(2rem, 4vw, 4rem);
-  align-items: start;
-}
-
-.kontakt__text .blei { margin-bottom: 1.75rem; }
-
-.kontakt__punkte {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 0.55rem;
-  font-size: 0.9375rem;
-  color: var(--gedaempft);
-}
-.kontakt__punkte li { position: relative; padding-left: 1.5rem; }
-.kontakt__punkte li::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0.5em;
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--mint);
-}
-
-.kontakt__karte {
-  padding: 2.1rem;
-  border: 1px solid var(--kante-hell);
-  border-radius: var(--rundung);
-  background: linear-gradient(162deg, var(--indigo-tief), var(--platte) 64%);
-}
-
+.karte--kontakt { padding: 2.2rem; }
 .kontakt__label {
-  margin: 0 0 0.35rem;
-  font-family: var(--schrift-mono);
-  font-size: 0.625rem;
-  letter-spacing: 0.11em;
-  text-transform: uppercase;
-  color: var(--leise);
+  margin: 0 0 .4rem; font-family: var(--schrift-mono);
+  font-size: .625rem; letter-spacing: .13em; text-transform: uppercase; color: var(--leise);
 }
-
-.kontakt__mail,
-.kontakt__tel {
-  display: block;
-  margin-bottom: 1.5rem;
+.kontakt__wert {
+  display: block; margin-bottom: 1.6rem;
   font-family: var(--schrift-display);
-  font-size: clamp(1.0625rem, 2vw, 1.375rem);
-  font-weight: 700;
-  letter-spacing: -0.025em;
-  text-decoration: none;
-  color: var(--papier);
-  word-break: break-word;
-  transition: color .16s ease;
+  font-size: clamp(1.0625rem, 2vw, 1.4rem); font-weight: 700; letter-spacing: -.03em;
+  color: var(--papier); text-decoration: none; word-break: break-word;
+  transition: opacity var(--takt-mikro) var(--ease-aus);
 }
-.kontakt__mail:hover,
-.kontakt__tel:hover { color: var(--indigo-weich); }
-
+.kontakt__wert:hover { opacity: .7; }
 .kontakt__hinweis {
-  margin: 0;
-  padding-top: 1.25rem;
-  border-top: 1px solid var(--kante);
-  font-family: var(--schrift-mono);
-  font-size: 0.625rem;
-  letter-spacing: 0.04em;
-  color: var(--pfirsich);
+  margin: 0; padding-top: 1.3rem; border-top: 1px solid var(--kante);
+  font-family: var(--schrift-mono); font-size: .625rem;
+  letter-spacing: .05em; line-height: 1.6; color: var(--iris-3);
 }
 
-/* ── Rechtliche Seiten ──────────────────────────────────────────────── */
-
-.recht { max-width: 46rem; }
-
-.recht__titel {
-  margin: 2.75rem 0 0.75rem;
-  font-family: var(--schrift-display);
-  font-size: 1.0625rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-}
-
-.recht__text {
-  margin: 0;
-  font-size: 0.9375rem;
-  line-height: 1.7;
-  color: var(--gedaempft);
-}
-.recht__text em { color: var(--pfirsich); font-style: normal; }
+/* ── Rechtliches ────────────────────────────────────────────────────── */
 
 .warnung {
-  margin: 2rem 0 1rem;
-  padding: 1.35rem 1.6rem;
-  border: 1px solid color-mix(in srgb, var(--pfirsich) 38%, transparent);
-  border-left: 3px solid var(--pfirsich);
-  border-radius: var(--rundung-klein);
-  background: color-mix(in srgb, var(--pfirsich) 8%, transparent);
+  margin: 2rem 0 1rem; padding: 1.4rem 1.7rem;
+  border: 1px solid color-mix(in srgb, var(--iris-3) 36%, transparent);
+  border-left: 3px solid var(--iris-3);
+  border-radius: var(--radius-klein);
+  background: color-mix(in srgb, var(--iris-3) 7%, transparent);
 }
-.warnung p {
-  margin: 0;
-  font-size: 0.9375rem;
-  line-height: 1.65;
-  color: var(--gedaempft);
-}
-.warnung strong { color: var(--pfirsich); font-weight: 600; }
+.warnung p { margin: 0; font-size: .9375rem; line-height: 1.65; color: var(--gedaempft); }
+.warnung strong { color: var(--iris-3); font-weight: 600; }
 
 /* ── Fußzeile ───────────────────────────────────────────────────────── */
 
-.fuss { padding-block: 2.5rem; border-top: 1px solid var(--kante); }
+.fuss { padding-block: clamp(3rem, 6vw, 5rem) 2.5rem; border-top: 1px solid var(--kante); }
 
-.fuss__zeile {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 1rem 2rem;
-  font-size: 0.8125rem;
-  color: var(--leise);
+.fuss__raster {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) repeat(auto-fit, minmax(9rem, 1fr));
+  gap: 2.5rem;
+  padding-bottom: 3rem;
 }
-
-.fuss__marke {
-  margin: 0;
+.fuss__marke { display: grid; gap: 1rem; align-content: start; }
+.fuss__satz {
+  margin: 0; max-width: 24ch;
   font-family: var(--schrift-display);
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  color: var(--papier);
+  font-size: 1.0625rem; font-weight: 700; letter-spacing: -.025em; line-height: 1.3;
+}
+.fuss__spalte { display: grid; gap: .6rem; align-content: start; font-size: .875rem; }
+.fuss__kopf {
+  margin: 0 0 .3rem; font-family: var(--schrift-mono);
+  font-size: .625rem; letter-spacing: .13em; text-transform: uppercase; color: var(--leise);
+}
+.fuss__spalte a {
+  color: var(--gedaempft); text-decoration: none;
+  transition: color var(--takt-mikro) var(--ease-aus);
+}
+.fuss__spalte a:hover { color: var(--papier); }
+.fuss__note {
+  margin: 0; padding-top: 2rem; border-top: 1px solid var(--kante);
+  font-size: .8125rem; color: var(--leise);
 }
 
-.fuss__nav { display: flex; gap: 1.5rem; margin-right: auto; }
-.fuss__nav a { color: var(--leise); text-decoration: none; }
-.fuss__nav a:hover { color: var(--papier); }
+/* ── Fingergerechte Ziele ───────────────────────────────────────────── */
 
-.fuss__note { margin: 0; }
+/* Nur auf Geräten mit grobem Zeiger. Am Mauszeiger wäre die zusätzliche
+   Höhe verschenkter Platz, am Finger ist sie die Bedingung dafür, dass
+   man trifft (44 px nach Apple HIG, 48 dp nach Material). */
+@media (pointer: coarse) {
+  .marke,
+  .nav a,
+  .fuss__spalte a,
+  .fuss__nav a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
+  }
+  .fuss__spalte { gap: 0; }
+  /* Der Unterstrich sitzt sonst am unteren Rand des vergrößerten Feldes
+     statt unter der Schrift. */
+  .nav a::after { top: calc(50% + .8em); bottom: auto; }
+}
 
-/* ── Auf schmalen Geräten ───────────────────────────────────────────── */
+/* ── Einblenden beim Scrollen ───────────────────────────────────────── */
 
-@media (max-width: 60rem) {
-  /* Gestapelt zuerst die Aussage, dann das Bild */
-  .hero__raster { grid-template-columns: 1fr; }
+.js-motion .heb { opacity: 0; transform: translateY(20px); }
+.js-motion .heb.ist-da {
+  opacity: 1; transform: none;
+  transition: opacity var(--takt-gross) var(--ease-aus),
+              transform var(--takt-gross) var(--ease-aus);
+}
 
-  /* Raster statt Flex, damit Marke und Knopf verlässlich in einer Zeile
-     stehen und die Navigation darunter die volle Breite bekommt. */
+/* ── Schmale Geräte ─────────────────────────────────────────────────── */
+
+@media (max-width: 62rem) {
+  /* Plätze explizit setzen: die Navigation steht im Quelltext vor dem
+     Knopf und würde ihn sonst in eine dritte Zeile schieben. */
   .kopf__zeile {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
     align-items: center;
-    gap: 0.6rem 1rem;
-    padding-block: 0.75rem;
+    gap: .6rem 1rem;
+    padding-block: .8rem;
     min-height: 0;
   }
-  /* Plätze explizit setzen: die Navigation steht im Quelltext vor dem
-     Knopf und würde ihn sonst in eine dritte Zeile schieben. */
   .marke { grid-column: 1; grid-row: 1; margin-right: 0; min-width: 0; }
   .marke__text { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-  .knopf--klein { grid-column: 2; grid-row: 1; margin-left: 0; }
+  .knopf--klein { grid-column: 2; grid-row: 1; }
   .nav {
-    grid-column: 1 / -1;
-    grid-row: 2;
+    grid-column: 1 / -1; grid-row: 2;
     /* Ohne min-width: 0 verweigert das Flex-Element das Schrumpfen und
        overflow-x bliebe wirkungslos — die Seite würde seitlich scrollen. */
     min-width: 0;
-    gap: 1.25rem;
+    gap: 1.3rem;
     overflow-x: auto;
-    padding-bottom: 0.25rem;
+    padding-bottom: .2rem;
     scrollbar-width: none;
     -webkit-overflow-scrolling: touch;
   }
   .nav::-webkit-scrollbar { display: none; }
   .nav a { white-space: nowrap; }
+
+  .schritt { grid-template-columns: 1fr; gap: .8rem; }
+  .schritt__nr { font-size: 2rem; }
 }
 
-/* Unterhalb dieser Breite würden die beiden Karten die Maschine vollständig
-   verdecken. Statt sie unlesbar zu verkleinern, läuft die Erzählung hier
-   von oben nach unten: Anfrage, Maschine, Antwort. */
 @media (max-width: 34rem) {
-  .maschine { display: grid; gap: 0.75rem; }
-  .maschine__bild { order: 2; }
-  .chip {
-    position: static;
-    width: 100%;
-    backdrop-filter: none;
-    box-shadow: none;
-  }
-  .chip--frage { order: 1; }
-  .chip--antwort { order: 3; }
-}
-
-@media (max-width: 32rem) {
-  .marke__text { font-size: 0.8125rem; }
-  .hero__aktionen .knopf { width: 100%; }
-  .messwert__zahl { font-size: 2.5rem; }
-  .code__leib { font-size: 0.6875rem; padding-inline: 1.1rem; }
+  .hero { min-height: auto; }
+  .hero__buehne { width: 108vw; opacity: .75; }
+  .hero__knoepfe .knopf { width: 100%; }
+  .fuss__raster { grid-template-columns: 1fr 1fr; }
 }
 
 /* ── Bewegung sparsam ───────────────────────────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
+  @view-transition { navigation: none; }
   *, *::before, *::after {
     animation-duration: .01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: .01ms !important;
   }
-  .chip { opacity: 1 !important; transform: none !important; }
+  .js-motion .heb { opacity: 1 !important; transform: none !important; }
+  .js-motion .zeile > span { transform: none !important; }
+  .chrom__css { animation: none; }
 }

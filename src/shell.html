@@ -1,0 +1,85 @@
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{TITLE}}</title>
+<meta name="description" content="{{DESC}}">
+<link rel="canonical" href="{{SITE}}/{{PATH}}">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<meta name="theme-color" content="#060608">
+
+<meta property="og:type" content="{{OGTYPE}}">
+<meta property="og:locale" content="de_DE">
+<meta property="og:site_name" content="Scholz Growth Engine">
+<meta property="og:title" content="{{TITLE}}">
+<meta property="og:description" content="{{DESC}}">
+<meta property="og:url" content="{{SITE}}/{{PATH}}">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="{{BASE}}favicon.svg" type="image/svg+xml">
+<link rel="preload" href="{{BASE}}assets/fonts/space-grotesk.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{BASE}}assets/fonts/dm-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="{{BASE}}assets/css/fonts.css">
+<link rel="stylesheet" href="{{BASE}}assets/css/main.css">
+</head>
+<body data-seite="{{NAV}}">
+
+<a class="skip" href="#inhalt">Zum Inhalt springen</a>
+
+<header class="kopf">
+  <div class="bahn kopf__zeile">
+    <a class="marke" href="{{BASE}}index.html" aria-label="Scholz Growth Engine — Startseite">
+      <span class="marke__zeichen" aria-hidden="true"></span>
+      <span class="marke__text">Scholz&nbsp;Growth&nbsp;Engine</span>
+    </a>
+    <nav class="nav" aria-label="Hauptnavigation">
+      <a href="{{BASE}}leistungen.html" data-nav="leistungen">Leistungen</a>
+      <a href="{{BASE}}vorgehen.html" data-nav="vorgehen">Vorgehen</a>
+      <a href="{{BASE}}ergebnisse.html" data-nav="ergebnisse">Ergebnisse</a>
+      <a href="{{BASE}}ratgeber/index.html" data-nav="ratgeber">Ratgeber</a>
+      <a href="{{BASE}}ueber-uns.html" data-nav="ueber-uns">Über uns</a>
+    </nav>
+    <a class="knopf knopf--klein" href="{{BASE}}kontakt.html">Audit anfragen</a>
+  </div>
+</header>
+
+<main id="inhalt">
+{{BODY}}
+</main>
+
+<footer class="fuss">
+  <div class="bahn">
+    <div class="fuss__raster">
+      <div class="fuss__marke">
+        <span class="marke__zeichen marke__zeichen--gross" aria-hidden="true"></span>
+        <p class="fuss__satz">Sichtbar werden, wo Antworten entstehen.</p>
+      </div>
+      <nav class="fuss__spalte" aria-label="Leistungen">
+        <p class="fuss__kopf">Leistungen</p>
+        <a href="{{BASE}}leistungen.html">Technisches SEO</a>
+        <a href="{{BASE}}leistungen.html#profil">Business Profile</a>
+        <a href="{{BASE}}leistungen.html#geo">GEO-Basis</a>
+      </nav>
+      <nav class="fuss__spalte" aria-label="Unternehmen">
+        <p class="fuss__kopf">Unternehmen</p>
+        <a href="{{BASE}}vorgehen.html">Vorgehen</a>
+        <a href="{{BASE}}ergebnisse.html">Ergebnisse</a>
+        <a href="{{BASE}}ueber-uns.html">Über uns</a>
+        <a href="{{BASE}}kontakt.html">Kontakt</a>
+      </nav>
+      <nav class="fuss__spalte" aria-label="Rechtliches">
+        <p class="fuss__kopf">Rechtliches</p>
+        <a href="{{BASE}}impressum.html">Impressum</a>
+        <a href="{{BASE}}datenschutz.html">Datenschutz</a>
+      </nav>
+    </div>
+    <p class="fuss__note">
+      Diese Seite lädt nichts von Dritten, setzt keine Cookies und braucht deshalb kein Einwilligungsbanner.
+    </p>
+  </div>
+</footer>
+
+<script src="{{BASE}}assets/js/main.js" defer></script>
+{{SCHEMA}}
+</body>
+</html>
